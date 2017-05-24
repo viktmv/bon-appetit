@@ -65,6 +65,8 @@ module.exports = (knex) => {
   })
 
   router.get('/restaurants', (req, res) => {
+    console.log('hello');
+    res.sendStatus(200)
 
   });
 
@@ -75,7 +77,42 @@ module.exports = (knex) => {
       .then((results) => {
         res.join(results);
       });
-  })
+  });
+
+router.post('/login', (req, res) => {
+  let email = req.body.email;
+  let pass = req.body.password;
+  //res.cookie('user_id', userId)
+  if (!req.body.email || !req.body.password) {
+    res.sendStatus(400);  // Bad Request
+  } else {
+      let userId = checkUser(email, pass);
+      if(userId) {
+        req.session.user_id = userId;
+        res.redirect("/users/:id")
+      } else {
+          res.sendStatus(400);
+        }
+    }
+  });
+
+router.post('restaurants/login', (req, res) => {
+  let email = req.body.email;
+  let pass = req.body.password;
+  //res.cookie('user_id', userId)
+  if (!req.body.email || !req.body.password) {
+    res.sendStatus(400);  // Bad Request
+  } else {
+      let restId = checkRest(email, pass);
+      if(restId) {
+        req.session.restaurants_id = restId;
+        res.redirect("/restaurants/:id/active")
+      } else {
+          res.sendStatus(400);
+        }
+    }
+  });
+
 
 
   return router;
