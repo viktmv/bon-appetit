@@ -6,6 +6,7 @@ const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
 const express     = require("express");
 const bodyParser  = require("body-parser");
+const session     = require('express-session');
 const sass        = require("node-sass-middleware");
 const app         = express();
 
@@ -15,6 +16,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
+const restaroutes = require("./routes/restaroutes");
 const usersRoutes = require("./routes/users");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -26,6 +28,14 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
+
+// Dong -  Cookie session settings to keep track of the userID
+app.use(session({
+  cookie: { maxAge: 60000 },
+  secret: 'andrew_thomas_par_supa_secret',
+  resave: false,
+  saveUninitialized: false
+}))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
@@ -37,10 +47,41 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
+app.use("/restaurants", restaroutes(knex));
 
-// Home page
-app.get("/", (req, res) => {
-  res.render("index");
+app.get('/', (req, res) => {
+  if (!req.session.user_id || !req.session.restaurant_id) {
+    res.status(200).redirect('/login')
+  } else if (req.session.user_id && !req.sesssion.restaurant_id) {
+    res.redirect('/user/menu')
+  } else {
+    res.redirect('/admin')
+  }
+});
+
+// logout will destroy cookie session
+app.post('/logout', (req, res) => {
+  req.session = null
+  res.redirect('/login')
+});
+
+app.get('/login', (req, res) => {
+  res.render('login')
+});
+
+// If user login credentials valid, redirect to menu page to create order.
+// If login credentials invalid or login fails, redirect to homepage
+app.post('/login', (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+  let user_id = ""
+  // if (user && (bcrypt.compareSync(password, user.password) || user.password === password)) {
+  //   user_id = user.id
+  //   req.session.user_id = user_id
+  //   res.redirect('/user/menu')
+  // } else {
+  //   res.status(401).redirect('/')
+  // }
 });
 
 app.listen(PORT, () => {
