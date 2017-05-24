@@ -4,15 +4,14 @@ exports.seed = function(knex, Promise) {
       return Promise.all([
         knex('food').insert({
           foodname: 'pizza',
-          price: 9.99
+          id: 4
         }),
         knex('food').insert({
           foodname: 'spaghetti',
-          price: 9.99
+          id: 5
         }),
         knex('food').insert({
-          foodname: 'bagel',
-          price: 9.99
+          foodname: 'bagel'
         })
       ]);
     });
