@@ -70,6 +70,23 @@ router.post('/login', (req, res) => {
     }
   });
 
+router.post('restaurants/login', (req, res) => {
+  let email = req.body.email;
+  let pass = req.body.password;
+  //res.cookie('user_id', userId)
+  if (!req.body.email || !req.body.password) {
+    res.sendStatus(400);  // Bad Request
+  } else {
+      let restId = checkRest(email, pass);
+      if(restId) {
+        req.session.restaurants_id = restId;
+        res.redirect("/restaurants/:id/active")
+      } else {
+          res.sendStatus(400);
+        }
+    }
+  });
+
 
 app.listen(PORT, () => {
   console.log('Example app listening on port' + PORT);
