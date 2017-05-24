@@ -3,15 +3,15 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('orders', function(table){
       table.increments('id');
 
-      table.string('user_id').references('users.id');
-      table.string('rest_id').references('restaurants.id');
-      table.string('food_id').references('food.id');
+      table.integer('user_id').references('users.id');
+      table.integer('rest_id').references('restaurants.id');
+      table.integer('food_id').references('food.id');
     }),
     knex.schema.createTable('resta_menu', function(table){
       table.increments('id');
 
-      table.string('rest_id').references('restaurants.id');
-      table.string('food_id').references('food.id');
+      table.integer('rest_id').references('restaurants.id');
+      table.integer('food_id').references('food.id');
     })
   ])
 };
