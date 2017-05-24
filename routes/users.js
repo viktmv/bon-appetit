@@ -37,7 +37,7 @@ module.exports = (knex) => {
   router.get('/menu/:id', (req, res) => {
     knex
       .select('*')
-      .from('restaurant_menu')
+      .from('resta_menu')
       .then((results) => {
         res.join(results);
       });
