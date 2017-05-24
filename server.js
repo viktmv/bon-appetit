@@ -56,9 +56,6 @@ app.use('/api/users', usersRoutes(knex));
 app.use("/restaurants", restaroutes(knex));
 
 // Home page
-app.get('/', (req, res) => {
-  res.render('index');
-
 
 app.get('/', (req, res) => {
   if (!req.session.user_id || !req.session.restaurant_id) {
