@@ -8,6 +8,8 @@ const express     = require('express');
 const bodyParser  = require('body-parser');
 const sass        = require('node-sass-middleware');
 const app         = express();
+//const express     = require('express');
+const router      = express.Router();
 
 const knexConfig  = require('./knexfile');
 const knex        = require('knex')(knexConfig[ENV]);
@@ -43,13 +45,30 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/users/:id', (req, res) => {
-  res.render('restaurants')
-});
+// app.get('/users/:id', (req, res) => {
+//   res.render('restaurants')
+// });
 
 app.get('/menu/:id', (req, res) => {
   res.render('menu')
 });
+
+router.post('/login', (req, res) => {
+  let email = req.body.email;
+  let pass = req.body.password;
+  //res.cookie('user_id', userId)
+  if (!req.body.email || !req.body.password) {
+    res.sendStatus(400);  // Bad Request
+  } else {
+      let userId = checkUser(email, pass);
+      if(userId) {
+        req.session.user_id = userId;
+        res.redirect("/users/:id")
+      } else {
+          res.sendStatus(400);
+        }
+    }
+  });
 
 
 app.listen(PORT, () => {
