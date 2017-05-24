@@ -48,17 +48,20 @@ app.use(express.static("public"));
 // Mount all resource routes
 app.use("/restaurants", restaroutes(knex));
 app.use("/api/users", usersRoutes(knex));
-app.use("/restaurants", restaroutes(knex));
 
-app.get('/', (req, res) => {
-  if (!req.session.user_id || !req.session.restaurant_id) {
-    res.status(200).redirect('/login')
-  } else if (req.session.user_id && !req.sesssion.restaurant_id) {
-    res.redirect('/user/menu')
-  } else {
-    res.redirect('/admin')
-  }
+app.get("/", (req, res) => {
+  res.render("index");
 });
+
+// app.post('/login', (req, res) => {
+//   if (!req.session.user_id || !req.session.restaurant_id) {
+//     res.status(200).redirect('/')
+//   } else if (req.session.user_id && !req.sesssion.restaurant_id) {
+//     res.redirect('/restaurants')
+//   } else {
+//     res.redirect('/admin')
+//   }
+// });
 
 // logout will destroy cookie session
 app.post('/logout', (req, res) => {
@@ -66,24 +69,20 @@ app.post('/logout', (req, res) => {
   res.redirect('/login')
 });
 
-app.get('/login', (req, res) => {
-  res.render('login')
-});
-
-// If user login credentials valid, redirect to menu page to create order.
-// If login credentials invalid or login fails, redirect to homepage
-app.post('/login', (req, res) => {
-  const email = req.body.email
-  const password = req.body.password
-  let user_id = ""
-  // if (user && (bcrypt.compareSync(password, user.password) || user.password === password)) {
-  //   user_id = user.id
-  //   req.session.user_id = user_id
-  //   res.redirect('/user/menu')
-  // } else {
-  //   res.status(401).redirect('/')
-  // }
-});
+// // If user login credentials valid, redirect to menu page to create order.
+// // If login credentials invalid or login fails, redirect to homepage
+// app.post('/login', (req, res) => {
+//   const email = req.body.email
+//   const password = req.body.password
+//   let user_id = ""
+//   // if (user && (bcrypt.compareSync(password, user.password) || user.password === password)) {
+//   //   user_id = user.id
+//   //   req.session.user_id = user_id
+//   //   res.redirect('/user/menu')
+//   // } else {
+//   //   res.status(401).redirect('/')
+//   // }
+// });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

@@ -28,6 +28,21 @@ module.exports = (knex) => {
         res.json(results);
     });
   });
-
   return router;
 }
+
+module.exports = (knex) => {
+  //  GET request to query db and return all products and render them in menu form
+  router.get('/menu', (req, res) => {
+    return knex('food')
+      .select()
+      .then((allFood) => {
+        const locals = {
+          food: allFood
+        };
+          res.render('menu', locals);
+      })
+      .catch((err) => {
+        console.log("Knex query failed", err)
+      })
+  });
