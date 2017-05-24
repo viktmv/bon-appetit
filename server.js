@@ -46,7 +46,6 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/restaurants", restaroutes(knex));
 app.use("/api/users", usersRoutes(knex));
 
 app.get("/", (req, res) => {
