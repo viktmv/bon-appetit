@@ -92,13 +92,6 @@ app.post('/login', (req, res) => {
   // }
 });
 
-app.get('/users/:id', (req, res) => {
-  res.render('restaurants')
-});
-
-app.get('/menu/:id', (req, res) => {
-  res.render('menu')
-});
 
 
 app.listen(PORT, () => {

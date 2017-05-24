@@ -2,7 +2,6 @@
 
 const express = require('express');
 const router  = express.Router();
-// const async   = require('async');
 
 // Takes in localStorage and creates an array with item_id and item_quantity
 // const createOrder = (cart) => {
