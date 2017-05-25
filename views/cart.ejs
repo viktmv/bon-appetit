@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="/styles/cart.css"> -->
+    <link rel="stylesheet" href="/styles/footer.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+  <!-- Nav bar -->
+  <% include ./partials/_header %>
+
+  <div class="container order">
+    <div class="row">
+      <div class="col-12">
+        <a href="/users/menu" class="back">← Keep Shopping</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer">
+    <form method="POST" action="/users/order" id="checkout">
+      <input id="order-submit" type="submit" class="checkout" class="btn btn-primary btn-lg" value="Checkout"></input>
+    </form>
+    <span class="total">  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Total: $<span id="total"></span></span>
+  </div>
+
+  <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/scripts/cart.js"></script>
+  <script type="text/javascript" src="/scripts/display-cart-items.js"></script>
+  <!-- <script type="text/javascript" src="/scripts/delete-item.js"></script> -->
+  <!-- <script type="text/javascript" src="/scripts/edit-cart.js"></script> -->
+  <script type="text/javascript" src="/scripts/footer.js"></script>
+  <script type="text/javascript" src="/scripts/order-submit.js"></script>
+  </body>
+</html>

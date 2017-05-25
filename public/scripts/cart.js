@@ -3,7 +3,7 @@
 const getCart = () => {
   if (!localStorage.getItem('cart')) {
     const cart = {}
-    cart.products = []
+    cart.foods= []
     return cart;
   } else {
     return JSON.parse(localStorage.getItem('cart'));
@@ -16,19 +16,19 @@ const setCart = (cart) => {
 // Andrew - Adds items to cart/localStorage. Updates quantity if item is already in cart.
 const addItem = (id, name, price, img) => {
   let cart = getCart();
-  let matchingProduct = cart.products.findIndex((product) => {
-    return product.item_id === id;
+  let matchingProduct = cart.foods.findIndex((food) => {
+    return food.item_id === id;
   })
   if (matchingProduct === -1) {
-    const product = {};
-    product.item_id = id;
-    product.name = name;
-    product.price = price;
-    product.image_url = img;
-    product.quantity = 1;
-    cart.products.push(product)
+    const food = {};
+    food.item_id = id;
+    food.name = name;
+    food.price = price;
+    food.image_url = img;
+    food.quantity = 1;
+    cart.foods.push(food)
   } else {
-    cart.products[matchingProduct].quantity += 1;
+    cart.foods[matchingProduct].quantity += 1;
   }
   setCart(cart)
 }
