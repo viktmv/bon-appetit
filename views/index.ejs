@@ -16,9 +16,6 @@
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/carousel.css">
 
-  <!-- JQuery Modal Plugin -->
-  <script type="text/javascript" src="/scripts/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="/scripts/jquery.leanModal.min.js"></script>
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
 </head>
 
@@ -29,65 +26,16 @@
     <!-- HEADER OF WEBSITE  -->
     <div class='jumbotron' id='header'>
       <div class='container-fluid'>
-        <h1>Order Fresh Food</h1>
-        <p>In today's world internet is the most popular way of connecting with the people. At <a href='http://www.tutorialrepublic.com' target='_blank'>tutorialrepublic.com</a> you will learn the essential of web development technologies along with real
-          life practice example, so that you can create your own website to connect with the people around the world.</p>
-        <p><a href='/foods' target='_blank' class='btn btn-success btn-lg'>Menus</a></p>
+        <h1>FOOD FROM TORONTO'S BEST RESTAURANTS</h1>
+        <p>Indulge</p>
+        <p><a href='/api/users/menu' target='_blank' class='btn btn-success btn-lg'>Menus</a></p>
       </div>
     </div>
     <div>
-      <a href='/foods'><button type='submit' class='menuBtn'><i class='fa fa-list icon' aria-hidden='true'></i>See Our Menu</button></a>
+      <a href='/api/users/menu'><button type='submit' class='menuBtn'><i class='fa fa-list icon' aria-hidden='true'></i>See Our Menu</button></a>
       <p class='subtitle'>Ready to Order?<a href='#'><span class='mainLinks'>Login</span></a> or <a href='/register'><span class='mainLinks'>Register</span></a></p>
     </div>
 
-    <!-- Carousel for displaying photos of food -->
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner" role="listbox">
-        <div class="carousel-item active">
-          <img class="first-slide" src="https://static1.squarespace.com/static/517aaf16e4b0b2e0f183a30f/t/5891f26a2e69cfa51773c255/1485959873714/" alt="First slide">
-          <div class="container">
-            <div class="carousel-caption d-none d-md-block text-left">
-              <h1>Chocolate Raspberry Cupcake</h1>
-              <p>Chocolate cake with Raspberry buttercream and chocolate sprinkles.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img class="second-slide" src="https://scontent-yyz1-1.xx.fbcdn.net/v/t31.0-8/15896130_1271934456218755_6521323913361664120_o.jpg?oh=a5f90420aafb4bd38dbcd2981b3d3bf5&oe=590A2659" alt="Second slide">
-          <div class="container">
-            <div class="carousel-caption d-none d-md-block">
-              <h1>Banana Cream Pie Donut</h1>
-              <p>Donut filled with banana flavoured cream</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img class="third-slide" src="http://www.nadege-patisserie.com/wp-content/uploads/2015/09/ProductLeSoleilDautomneLarge.jpg" alt="Third slide">
-          <div class="container">
-            <div class="carousel-caption d-none d-md-block text-right">
-              <h1>LE SOLEIL D’AUTOMNE</h1>
-              <p>The translation of the name means “the autumn sun”. This tart is also warm & bright with a light passion fruit & mango mousse, passion fruit & mango coulis, coconut mousse, kumquat marmalade and almond shortbread crust.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-      <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

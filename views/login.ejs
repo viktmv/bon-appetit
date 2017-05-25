@@ -23,25 +23,44 @@
 </head>
 
 <body>
-  <!-- NAV BAR -->
-  <% include ./partials/_header %>
+  <div class="site-wrapper">
+    <div class="site-wrapper-inner">
+      <div class="main-container">
+        <div class="inner cover">
+          <span class="glyphicon glyphicon-link"></span>
+          <h1>Login</h1>
 
-    <!-- HEADER OF WEBSITE  -->
-    <div class='jumbotron' id='header'>
-      <div class='container-fluid'>
-        <h1>Order Fresh Food</h1>
-        <p><a href='/foods' target='_blank' class='btn btn-success btn-lg'>Menus</a></p>
+          <div class="row">
+
+            <div class="col-lg-12">
+              <form method="POST" action="/login">
+                <fieldset>
+                  <legend>Email</legend>
+                  <input id="email" type="email" name="email" size="25" placeholder="Enter Email">
+                </fieldset>
+                <br>
+                <fieldset>
+                  <legend>Password</legend>
+                  <input id="password" type="password" name="password" size="25" placeholder="Enter Password">
+                </fieldset>
+                <br>
+                <input type ="submit" class="btn btn-shorten" type="button" name ="login"></button>
+              </form>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div id="link"></div>
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </div>
-    <div>
-      <a href='/foods'><button type='submit' class='menuBtn'><i class='fa fa-list icon' aria-hidden='true'></i>See Our Menu</button></a>
-      <p class='subtitle'>Ready to Order?<a href='#'><span class='mainLinks'>Login</span></a> or <a href='/register'><span class='mainLinks'>Register</span></a></p>
-    </div>
+  </div>
 
-
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
-
 </html>
