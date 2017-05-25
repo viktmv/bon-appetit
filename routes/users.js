@@ -4,12 +4,12 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (knex) => {
-  router.get('/', (req, res) => {
+  router.get('/menu', (req, res) => {
     knex
       .select()
-      .from('users')
-      .then(users => {
-        res.json(users);
+      .from('foods')
+      .then(foods => {
+        res.render('menu', {foods});
       })
       .catch(() =>{
         res.status(500).send();
