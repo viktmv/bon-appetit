@@ -4,11 +4,11 @@ require('dotenv').config();
 
 const PORT        = process.env.PORT || 8080;
 
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
+const ENV         = process.env.ENV || 'development';
+const express     = require('express');
+const bodyParser  = require('body-parser');
 const session     = require('express-session');
-const sass        = require("node-sass-middleware");
+const sass        = require('node-sass-middleware');
 
 const app         = express();
 //const express     = require('express');
@@ -19,8 +19,8 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
-const restaroutes = require("./routes/restaroutes");
-const usersRoutes = require("./routes/users");
+const restaroutes = require('./routes/restaroutes');
+const usersRoutes = require('./routes/users');
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -31,7 +31,7 @@ app.use(morgan('dev'));
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 
 // Dong -  Cookie session settings to keep track of the userID
 app.use(session({
@@ -53,7 +53,10 @@ app.use(express.static('public'));
 // Mount all resource routes
 
 app.use('/users', usersRoutes(knex));
-app.use("/restaurants", restaroutes(knex));
+app.use('/restaurants', restaroutes(knex));
+
+
+// ^^^^^^^^^ INITIAL SETUP - DO NOT MODIFY ANYTHING ABOVE THIS LINE ^^^^^^^^^^
 
 // Home page
 
@@ -61,11 +64,12 @@ app.get('/', (req, res) => {
     res.render('index.ejs')
 });
 
+// Login
 app.post('/login', (req, res) => {
   res.sendStatus(403)
 });
 
-// logout will destroy cookie session
+// Logout
 app.post('/logout', (req, res) => {
   req.session = null
   res.redirect('/')
