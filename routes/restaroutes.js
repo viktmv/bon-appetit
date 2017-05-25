@@ -17,13 +17,14 @@ module.exports = (knex) => {
       .select('*')
       .from('restaurant')
       .then((results) => {
-        res.json(results);
+        res.render('temp_orders.ejs', {results});
       });
   });
 
   // Handle request for order completion
-  router.post('/:id/complete', (req, res) => {
-    res.send('Order completed, restaurant ' + req.params.id);
+  router.post('/complete', (req, res) => {
+    console.log(req.body)
+    res.send('Order completed, restaurant ' + req.body.orderID);
   });
 
   // Login request
