@@ -11,7 +11,6 @@ const session     = require('express-session');
 const sass        = require('node-sass-middleware');
 
 const app         = express();
-//const express     = require('express');
 
 const knexConfig  = require('./knexfile');
 const knex        = require('knex')(knexConfig[ENV]);
@@ -61,12 +60,15 @@ app.use('/restaurants', restaroutes(knex));
 // Home page
 
 app.get('/', (req, res) => {
-    res.render('index.ejs')
+    res.status(200).render('index.ejs')
 });
 
 // Login
+// TODO: connect to DB for password checking
 app.post('/login', (req, res) => {
-  res.sendStatus(403)
+  if (!req.body.user_id) return res.sendStatus(403)
+  req.session.user_id = req.body.user_id
+  res.sendStatus(200)
 });
 
 // Logout
