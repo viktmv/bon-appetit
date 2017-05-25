@@ -25,38 +25,31 @@
 
 <body>
   <!-- Nav bar -->
-  <% include ./partials/_navbar %>
+  <% include ./partials/_header %>
 
     <div class="container">
       <div class="row">
 
-        <% locals.products.forEach((product) => {%>
+        <% foods.forEach((food) => {%>
           <div class="col-lg-4 col-md-6 col-sm-12 item">
             <!-- Data attributes for cart items -->
-            <div class="top-item" id="item-details" data-id="<%= food.id %>" data-name="<%= food.name %>" data-price="<%= product.price %>" data-image-url="<%= product.image_url %>">
+            <div class="top-item" id="item-details" data-id="<%= food.id %>" data-name="<%= food.name %>" data-price="<%= food.price %>" data-image-url="<%= food.image_url %>">
               <p>$
-                <%= product['price'] %>
+                <%= food['price'] %>
               </p>
               <button class="add-item" type="button" class="btn btn-default btn-md">Add to Cart</button>
             </div>
-            <img class="img-responsive" src="<%= product.image_url %>" <h3>
-            <%= product['name'] %>
+            <img class="img-responsive" src="<%= food.image_url %>" <h3>
+            <%= food['name'] %>
               </h3>
               <p>
-                <%= product['description'] %>
+                <%= food['description'] %>
               </p>
           </div>
           <%}); %>
 
 
 
-      </div>
-
-      <div id="footer">
-        <form method="GET" action="/user/cart" id="checkout">
-          <input type="submit" class="checkout" class="btn btn-primary btn-lg" value="Checkout"></input>
-        </form>
-        <span class="total">  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Total: $<span id="total"></span></span>
       </div>
 
       <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

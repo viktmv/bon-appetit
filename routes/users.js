@@ -19,14 +19,31 @@ const router = express.Router();
 // }
 
 module.exports = (knex) => {
-
-  router.get("/", (req, res) => {
+  router.get("/menu", (req, res) => {
     knex
-      .select("*")
-      .from("users")
-      .then((results) => {
-        res.json(results);
-      });
+    .select()
+    .from('foods')
+    .then((rows) => {
+      const locals = {
+        foods: rows
+      }
+      res.render('menu', locals);
+    })
+    .catch((err) =>{
+      res.status(500).send();
+    });
+    //
+    //   return knex('foods')
+    //     .select()
+    //     .then((allFoods)) => {
+    //       const locals = {
+    //         foods: allFoods
+    //       };
+    //       res.render('menu', locals);
+    //     })
+    // .catch((err) => {
+    //   console.log("knee query failed", err)
+    // })
   });
-  return router;
+return router;
 }
