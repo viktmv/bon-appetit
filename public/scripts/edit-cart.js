@@ -5,10 +5,10 @@ const editCart = (id, quantity) => {
   let matchingProduct = cart.foods.findIndex((food) => {
     return food.item_id === id;
   })
-  // Andrew - If new quantity is > 0, quantity will be updated
+  // If new quantity is > 0, quantity will be updated
   if (quantity > 0) {
     cart.foods[matchingProduct].quantity = quantity;
-    // Andrew - Will delete item if quantity === 0
+    // Deletes item if quantity === 0
   } else {
     cart.foods.splice(matchingProduct, 1);
   }

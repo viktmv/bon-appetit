@@ -16,3 +16,10 @@ $(() => {
     addItem(item.data('id'), item.data('name'), item.data('price'), item.data('image-url'))
   })
 });
+
+// function renderMiniCart(items) {
+//   items.forEach((i) => {
+//
+//     $('#cart-div').append("<div>" + item.name + "</div>");
+//   })
+// }

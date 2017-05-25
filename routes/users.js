@@ -20,7 +20,8 @@ module.exports = (knex) => {
 
   // Render cart when user clicks on cart icon
   router.get('/cart', (req, res) => {
-    res.render('cart')
+    let user = req.session.username || ''
+    res.render('cart', {user});
   })
 
   router.get('/:orderID', (req, res) => {

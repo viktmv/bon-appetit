@@ -9,11 +9,11 @@ const getCart = () => {
     return JSON.parse(localStorage.getItem('cart'));
   }
 }
-// Andrew - Sets localStorage to cart.
+// Sets localStorage to cart.
 const setCart = (cart) => {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
-// Andrew - Adds items to cart/localStorage. Updates quantity if item is already in cart.
+// Adds items to cart/localStorage. Updates quantity if item is already in cart.
 const addItem = (id, name, price, img) => {
   let cart = getCart();
   let matchingProduct = cart.foods.findIndex((food) => {
