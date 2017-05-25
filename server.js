@@ -52,6 +52,10 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
 // app.post('/login', (req, res) => {
 //   if (!req.session.user_id || !req.session.restaurant_id) {
 //     res.status(200).redirect('/')
