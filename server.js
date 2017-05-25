@@ -62,6 +62,7 @@ app.use('/restaurants', restaroutes(knex));
 // Home page
 
 app.get('/', (req, res) => {
+  let user
   console.log(req.session)
   if (req.session.username) user = req.session.username;
   res.status(200).render('index.ejs', {user})
@@ -81,6 +82,7 @@ app.post('/login', (req, res) => {
     password
   })
   .select()
+  .then((userData) => {
     if (userData.length === 0) return res.sendStatus(404)
     req.session.username = userData[0].username
     res.status(200).send(userData)
