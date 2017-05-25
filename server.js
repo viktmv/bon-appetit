@@ -4,10 +4,10 @@ require('dotenv').config();
 
 const PORT = process.env.PORT || 8080;
 
-const session     = require('express-session');
 const ENV = process.env.ENV || 'development';
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('cookie-session')
 const sass = require('node-sass-middleware');
 
 const app = express();
@@ -33,11 +33,13 @@ app.use(knexLogger(knex));
 app.set('view engine', 'ejs');
 
 // Dong -  Cookie session settings to keep track of the userID
+// Vik - I've replaced express session with cookie-session.
+// It is a bit easier to use and IMO a bit more suitable for our case
+
 app.use(session({
-  cookie: { maxAge: 60000 },
-  secret: 'andrew_thomas_par_supa_secret',
-  resave: false,
-  saveUninitialized: false
+  name: 'session',
+  keys: ['andrew_thomas_par_supa_secret', 'key2'],
+  maxAge: 24 * 60 * 60 * 1000
 }))
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -66,9 +68,28 @@ app.get('/', (req, res) => {
 // Login
 // TODO: connect to DB for password checking
 app.post('/login', (req, res) => {
-  if (!req.body.user_id) return res.sendStatus(403)
-  req.session.user_id = req.body.user_id
-  res.sendStatus(200)
+  let username = req.body.username;
+  let password = req.body.password;
+  if (!username) return res.sendStatus(403);
+  if (!password) return res.sendStatus(403);
+
+  knex('users')
+  .where({
+    username,
+    password
+  })
+  .select()
+  .then(userData => {
+    console.log(userData)
+    if (userData.length === 0) return res.sendStatus(404)
+    req.session.username = userData.username
+    res.status(200).send(userData)
+  })
+  .catch(err => {
+    console.log('something happend', err)
+    res.sendStatus(500)
+  })
+
 });
 
 // Logout
