@@ -29,7 +29,6 @@ $(() => {
     let restaname = $('#restaname').val()
     let password = $('#pwd').val()
 
-    console.log(restaname, password)
     $.ajax('/restaurants/login', {
       method: 'POST',
       data: { restaname, password }
