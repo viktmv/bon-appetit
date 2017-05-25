@@ -62,7 +62,9 @@ app.use('/restaurants', restaroutes(knex));
 // Home page
 
 app.get('/', (req, res) => {
-    res.status(200).render('index.ejs')
+  console.log(req.session)
+  if (req.session.username) user = req.session.username;
+  res.status(200).render('index.ejs', {user})
 });
 
 // Login
@@ -79,10 +81,8 @@ app.post('/login', (req, res) => {
     password
   })
   .select()
-  .then(userData => {
-    console.log(userData)
     if (userData.length === 0) return res.sendStatus(404)
-    req.session.username = userData.username
+    req.session.username = userData[0].username
     res.status(200).send(userData)
   })
   .catch(err => {
@@ -94,8 +94,8 @@ app.post('/login', (req, res) => {
 
 // Logout
 app.post('/logout', (req, res) => {
-  req.session = null
-  res.redirect('/')
+  req.session = null;
+  res.sendStatus(200);
 });
 
 
