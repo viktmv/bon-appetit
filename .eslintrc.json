@@ -21,6 +21,7 @@
             "warn",
             "single"
         ],
+        "semi": ["error", "always"],
         "no-console": 1,
         "no-multi-spaces": "warn"
     }
