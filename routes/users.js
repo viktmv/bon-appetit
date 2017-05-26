@@ -2,8 +2,48 @@
 
 const express = require('express');
 const router = express.Router();
+const async = require('async');
+
+const createOrder = (cart) => {
+  const order = []
+  cart.foods.forEach((food) => {
+    order.push(
+      {
+        item_id: food.item_id,
+        quantity: food.quantity
+      }
+    );
+  })
+  return order;
+}
+
+// Calculates total cost of each order
+const calculateTotal = (cart) => {
+  let total = 0;
+  cart.foods.forEach((food) => {
+    total += (food.price * food.quantity)
+  })
+  // Add tax to total. The total will not be rounded before database insertion
+  return total * 1.13;
+}
+
+// Function to create message from order. String interpolates item name and quantity,
+// pluralizes the name if the quantity is greater than 1. Seperates items with commas and replaces
+// the last commas with 'and'
+const createOrderMessage = (order) => {
+  const messageArray = []
+  order.forEach((item) => {
+    if (item.quantity > 1) {
+      messageArray.push(`${item.quantity} ${item.name}s`)
+    } else {
+      messageArray.push(`${item.quantity} ${item.name}`)
+    }
+  })
+  return messageArray.join(', ').replace(/,(?=[^,]*$)/, ' and')
+}
 
 module.exports = (knex) => {
+  // All routes get prepended with /users
   router.get('/menu', (req, res) => {
     knex
       .select()
@@ -18,12 +58,65 @@ module.exports = (knex) => {
       });
   });
 
+// Post request on order submission. Knex db insertion into orders table and
+// products_menu table.
+router.post('/order', (req, res) => {
+  // Checks for userID in cookie/session if user validation can be implemented
+  // const userID        = req.session.user_id
+  const userID        = 5;
+  // console.log(req.body.cart);
+  const cart          = JSON.parse(req.body.cart)
+  const total         = calculateTotal(cart)
+  const orderItems    = createOrder(cart)
+  const message       = createOrderMessage(cart.foods)
+  let order_id;
+  // async.waterfall([
+    // (callback) => {
+      // Inserts data into orders table and returns the order_id
+      knex('orders')
+       .returning('id')
+        .insert([{user_id: userID, total_price: total}])
+        .then(response => console.log(response))
+        .catch((err, result) => {
+          if(err){
+            return console.log(`Error: ${err}`);
+          } else {
+            console.log(result);
+            console.log(`Successfull order submission! The order_id is: ${order_id}`);
+            // res.json({url: `/user/${order_id}`});
+          }
+        });
+    // },
+    // (data, callback) => {
+    //   // Sets the orderID, which gets called on redirect in the url. Order_id is added to
+    //   // each item before insertion into product_order table.
+    //   order_id = data[0]
+    //   orderItems.map((orderItems) => {
+    //     orderItems['order_id'] = order_id
+    //   })
+    //   console.log('Order items', orderItems);
+    //   // knex batch insert requires an array.
+    //   return knex.batchInsert('food_orders', orderItems)
+    //     .then(response => callback(null, "done"))
+    //     .catch(callback);
+    // },
+  // ], (err, result) => {
+    // if(err){
+      // return console.log(`Error: ${err}`);
+    // } else {
+      // console.log(`Successfull order submission! The order_id is: ${order_id}`);
+      // res.json({url: `/user/${order_id}`});
+    // }
+  // });
+});
+
   // Render cart when user clicks on cart icon
   router.get('/cart', (req, res) => {
     let user = req.session.username || ''
     res.render('cart', {user});
   })
 
+  // Render a specific order
   router.get('/:orderID', (req, res) => {
     const orderID = Number(req.params.orderID)
     return knex.from('food_orders')
@@ -47,6 +140,5 @@ module.exports = (knex) => {
       })
       res.render('order_confirmation', orderConfirm);
   })
-
   return router;
 }

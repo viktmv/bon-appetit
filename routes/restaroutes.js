@@ -4,6 +4,29 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (knex) => {
+  // all routes are prepended with /restaurants
+
+
+  // get /order_status will render the order status page for the employee checking on new orders
+
+  router.get('/order_status', (req, res) => {
+    const locals = {};
+    return knex('orders')
+    .join('users', 'orders.user_id', 'users.id')
+    .select()
+    .then(function(result) {
+      locals.usersOrders = result;
+    }).then(function() {
+      return knex('food_orders')
+      .join('orders', 'food_orders.order_id', 'orders.id')
+      .join('foods', 'foods_orders.item_id', 'foods.id')
+      .select()
+      .then(function(result) {
+        locals.foodOrders = result;
+        res.render('order_status', locals);
+      });
+    });
+  });
 
   // For now just renders json
   // Should render restaurant login file
@@ -17,7 +40,7 @@ module.exports = (knex) => {
       .select('*')
       .from('restaurant')
       .then((results) => {
-        res.render('temp_orders.ejs', {results});
+        res.render('orders_status.ejs', {results});
       });
   });
 

@@ -73,7 +73,7 @@ $(() => {
     $('.order').append(`
         <div class="row">
           <div class="col-12 text-center">
-            Please select an item from the <a href="/user/menu">menu</a>.
+            Please select an item from the <a href="/users/menu">menu</a>.
           </div>
         </div>
       `)
