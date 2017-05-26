@@ -2,7 +2,6 @@
 
 const express = require('express');
 const router = express.Router();
-const async = require('async');
 
 const createOrder = (cart) => {
   const order = []
@@ -105,7 +104,8 @@ module.exports = (knex) => {
         return order_id
       })
       .then((order_id) => {
-        res.redirect(`/users/${order_id}`);
+        res.json({url: `order/${order_id}`})
+        // res.redirect('/users/order/' + order_id);
       })
       .catch((err, result) => {
         if (err) {
@@ -113,7 +113,6 @@ module.exports = (knex) => {
         } else {
           console.log(result);
           console.log(`Successfull order submission! The order_id is: ${order_id}`);
-
         }
       });
     //   // Sets the orderID, which gets called on redirect in the url. Order_id is added to
@@ -137,7 +136,7 @@ module.exports = (knex) => {
   // Render a specific order
   router.get('/order/:orderID', (req, res) => {
     const orderID = req.params.orderID
-    console.log(orderID)
+    console.log('GET ORDER', orderID)
     return knex.from('food_orders')
       .innerJoin('orders', 'food_orders.order_id', 'orders.id')
       .innerJoin('foods', 'food_orders.item_id', 'foods.id')
