@@ -6,7 +6,6 @@ const router = express.Router();
 module.exports = (knex) => {
   // all routes are prepended with /restaurants
 
-
   // get /order_status will render the order status page for the employee checking on new orders
 
   router.get('/order_status', (req, res) => {
