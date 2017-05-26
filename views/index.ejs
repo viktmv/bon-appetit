@@ -25,17 +25,21 @@
   <% include ./partials/_header %>
 
     <!-- HEADER OF WEBSITE  -->
-    <div class='jumbotron' id='header'>
+    <div class='jumbotron jumbotron-fluid center' id='header'>
       <div class='container-fluid'>
         <h1>FOOD FROM TORONTO'S BEST RESTAURANTS</h1>
         <p>Indulge</p>
         <p><a href='/users/menu' class='btn btn-success btn-lg'>Menus</a></p>
       </div>
+      <div class="ready-links">
+        <p class='subtitle'>Ready to Order?&nbsp;<a href='#'><span class='main-links'>Login</span></a> or <a href='/register'><span class='main-links'>Register</span></a></p>
+      </div>
     </div>
-    <div>
-      <a href='/users/menu'><button type='submit' class='menuBtn'><i class='fa fa-list icon' aria-hidden='true'></i>See Our Menu</button></a>
-      <p class='subtitle'>Ready to Order?<a href='#'><span class='mainLinks'>Login</span></a> or <a href='/register'><span class='mainLinks'>Register</span></a></p>
-    </div>
+
+    <video poster="" id="bgvid" playsinline autoplay muted loop>
+<!-- WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
+      <source src="video/bg.mp4" type="video/mp4">
+    </video>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
