@@ -116,12 +116,6 @@ module.exports = (knex) => {
 
         }
       });
-    //   // Sets the orderID, which gets called on redirect in the url. Order_id is added to
-    //   // each item that user orders before insertion into food_order table.
-    // order_id = data[0]
-    // console.log('Order items', orderItems);
-    //   // knex batch insert requires an array.
-    //   return knex.batchInsert('food_orders', orderItems)
   });
 
   // Render cart when user clicks on cart icon
