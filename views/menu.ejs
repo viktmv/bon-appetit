@@ -22,6 +22,7 @@
       right: 0;
       bottom: 0;
       background-color: rgba(0, 0, 0, .8);
+      z-index: 999999;
     }
     .partial-cart .container.order {
       position: relative;
@@ -99,11 +100,11 @@
         <p>DIV HERE</p>
       </div>
 
-      <div id="footer">
+      <div class="lower-footer" id="footer">
         <form class="checkout">
           <input class="toggle-cart" type="button" class="checkout" class="btn btn-primary btn-lg" value="Checkout">
         </form>
-        <span class="total">  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Total: $<span id="total"></span></span>
+        <span class="total">  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Total: $<span class="total-amount" id="total"></span></span>
       </div>
 
       <% include ./partials/_cart.ejs %>

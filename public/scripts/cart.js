@@ -34,19 +34,16 @@ const addItem = (id, name, price, img) => {
 }
 
 function toggleTotal() {
-  $('.add-item').on('click', () => {
-    console.log('total added')
-    $('#total').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
-  });
 
-  $('.delete-item').on('click', () => {
-    console.log('total subtracted')
-    $('#total').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
-  });
-
-  $('.edit-item-quantity').on('click', (e) => {
-    $(e.target).on('change', (e) => {
-      $('#total').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
-    })
-  })
+  //
+  // $('.delete-item').on('click', () => {
+  //   console.log('total subtracted')
+  //   $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
+  // });
+  //
+  // $('.edit-item-quantity').on('click', (e) => {
+  //   $(e.target).on('change', (e) => {
+  //     $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
+  //   })
+  // })
 }

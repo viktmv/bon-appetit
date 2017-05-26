@@ -20,9 +20,9 @@ $(() => {
   createSubtotal();
 
   if (createSubtotal() == 0) {
-    $('#total').append(0)
+    $('.total-amount').append(0)
   } else {
-    $('#total').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
+    $('.total-amount').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
   }
 
 });

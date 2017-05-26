@@ -101,9 +101,10 @@ const displayCartItems = () => {
         </div>
         `)
     }
-     $('#checkout').attr('class', 'checkout-hidden')
+    //  $('#checkout').attr('class', 'checkout-hidden')
      $('.totals').remove()
   } else {
+
     $('.empty-notice').remove()
     const cartItems = JSON.parse(localStorage.getItem('cart')).foods;
 
@@ -111,40 +112,44 @@ const displayCartItems = () => {
       $('.order-wrapper').append(createCartItem(cartItems[item]));
     }
 
+    $('.order-wrapper .add-item').on('click', () => {
+      console.log('total added')
+      $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
+    });
+
+    $('.order-wrapper .delete-item').on('click', (e) => {
+      let id = $(e.target).data('id')
+      // Remove item from cart and then call deleteCartItem function.
+      $(e.target).closest('#cart-item').remove()
+      deleteCartItem(id)
+
+      $('.totals').remove();
+
+      renderTotals();
+
+      $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
+    });
 
 
+    $('.order-wrapper .edit-item-quantity').on('click', (e) => {
+      $(e.target).on('change', (e) => {
+        let quantity = $(e.target).val();
+        let price = Number($(e.target).parents('div#cart-item.row').find('.item-price').html().slice(1));
+        let item = $(e.target).closest('.edit-item-quantity');
+        editCart(item.data('id'), quantity);
 
+        let newPrice = '$' + roundMoney(quantity * price);
 
-      $('.delete-item').on('click', (e) => {
-        let id = $(e.target).data('id')
-        // Remove item from cart and then call deleteCartItem function.
-        $(e.target).closest('#cart-item').remove()
-        deleteCartItem(id)
+        $(e.target).parents('div#cart-item.row').children('div:eq(3)').children().html(newPrice);
 
+        $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
         $('.totals').remove();
 
         renderTotals();
 
-      });
-
-      $('.edit-item-quantity').on('click', (e) => {
-        $(e.target).on('change', (e) => {
-          let quantity = $(e.target).val();
-          let price = Number($(e.target).parents('div#cart-item.row').find('.item-price').html().slice(1));
-          let item = $(e.target).closest('.edit-item-quantity');
-          editCart(item.data('id'), quantity);
-
-          let newPrice = '$' + roundMoney(quantity * price);
-
-          $(e.target).parents('div#cart-item.row').children('div:eq(3)').children().html(newPrice);
-
-          $('.totals').remove();
-
-          renderTotals();
-          toggleTotal()
-        })
       })
-    }
+    })
+  }
 }
 $(() => {
   $('.partial-cart').hide()
@@ -156,7 +161,6 @@ $(() => {
   $('#footer .checkout .toggle-cart').click(function() {
     $('.partial-cart').show()
     displayCartItems()
-    toggleTotal()
     renderTotals();
   })
 
@@ -170,5 +174,9 @@ $(() => {
     if (e.target.contains(cart)) $('.partial-cart').hide()
   })
 
-  toggleTotal()
+  $('.add-item').on('click', () => {
+    console.log('total added')
+    $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
+  });
+
 })
