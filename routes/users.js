@@ -23,11 +23,11 @@ const calculateTotal = (cart) => {
   cart.foods.forEach((food) => {
     total += (food.price * food.quantity)
   })
-  // Add tax to total. The total will not be rounded before database insertion
+  // Adds tax to total. The total will not be rounded before database insertion (eg. 79.99999999999999999)
   return total * 1.13;
 }
 
-// Function to create message from order. String interpolates item name and quantity,
+// Function to create message from order. String inserts the item name and quantity,
 // pluralizes the name if the quantity is greater than 1. Seperates items with commas and replaces
 // the last commas with 'and'
 const createOrderMessage = (order) => {
@@ -63,20 +63,22 @@ module.exports = (knex) => {
 router.post('/order', (req, res) => {
   // Checks for userID in cookie/session if user validation can be implemented
   // const userID        = req.session.user_id
-  const userID        = 5;
-  // console.log(req.body.cart);
+  const userID        = 4; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
   const cart          = JSON.parse(req.body.cart)
   const total         = calculateTotal(cart)
   const orderItems    = createOrder(cart)
   const message       = createOrderMessage(cart.foods)
   let order_id;
-  // async.waterfall([
-    // (callback) => {
-      // Inserts data into orders table and returns the order_id
+
+  // Inserts data into orders table and returns the order_id
       knex('orders')
        .returning('id')
         .insert([{user_id: userID, total_price: total}])
-        .then(response => console.log(response))
+        .then((order_id) => {
+          console.log(order_id)
+          return order_id
+        })
+        .then (order_id => console.log(`Successfull order submission! The order_id is: ${order_id}`))
         .catch((err, result) => {
           if(err){
             return console.log(`Error: ${err}`);
