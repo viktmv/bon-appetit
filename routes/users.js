@@ -78,7 +78,7 @@ router.post('/order', (req, res) => {
           console.log(order_id)
           return order_id
         })
-        .then (order_id => console.log(`Successfull order submission! The order_id is: ${order_id}`))
+        .then (order_id => console.log(`Successful order submission! The order_id is: ${order_id}`))
         .catch((err, result) => {
           if(err){
             return console.log(`Error: ${err}`);

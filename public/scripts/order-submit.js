@@ -10,7 +10,7 @@ $(() => {
         'cart': $cart
       },
       success:(data) => {
-        // Dong - Takes the url from the data response from post request and renders user/:orderID
+        // Dong - Takes the url from the data response from post request and renders users/:orderID
         window.location.replace(data.url)
         localStorage.clear()
       }
