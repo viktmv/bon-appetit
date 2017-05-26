@@ -3,7 +3,6 @@ $(() => {
   $('#checkout').on('submit', (e) => {
     e.preventDefault()
     let $cart = JSON.stringify(getCart())
-    console.log($cart);
     $.post({
       url: '/users/order',
       data: {

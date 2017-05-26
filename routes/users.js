@@ -27,20 +27,20 @@ const calculateTotal = (cart) => {
   return total * 1.13;
 }
 
-// Function to create message from order. String inserts the item name and quantity,
-// pluralizes the name if the quantity is greater than 1. Seperates items with commas and replaces
-// the last commas with 'and'
-const createOrderMessage = (order) => {
-  const messageArray = []
-  order.forEach((item) => {
-    if (item.quantity > 1) {
-      messageArray.push(`${item.quantity} ${item.name}s`)
-    } else {
-      messageArray.push(`${item.quantity} ${item.name}`)
-    }
-  })
-  return messageArray.join(', ').replace(/,(?=[^,]*$)/, ' and')
-}
+// // Function to create message from order. String inserts the item name and quantity,
+// // pluralizes the name if the quantity is greater than 1. Seperates items with commas and replaces
+// // the last commas with 'and'
+// const createOrderMessage = (order) => {
+//   const messageArray = []
+//   order.forEach((item) => {
+//     if (item.quantity > 1) {
+//       messageArray.push(`${item.quantity} ${item.name}s`)
+//     } else {
+//       messageArray.push(`${item.quantity} ${item.name}`)
+//     }
+//   })
+//   return messageArray.join(', ').replace(/,(?=[^,]*$)/, ' and')
+// }
 
 module.exports = (knex) => {
   // All routes get prepended with /users
@@ -64,11 +64,21 @@ router.post('/order', (req, res) => {
   // Checks for userID in cookie/session if user validation can be implemented
   // const userID        = req.session.user_id
   const userID        = 4; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
+  console.log (req.body.cart);
   const cart          = JSON.parse(req.body.cart)
   const total         = calculateTotal(cart)
   const orderItems    = createOrder(cart)
-  const message       = createOrderMessage(cart.foods)
+  // const message       = createOrderMessage(cart.foods)
   let order_id;
+
+
+
+// "foods":[
+// {"item_id":8,
+// "name":"Smashed Traditional",
+// "price":6.99,
+// "image_url":"http://smokespoutinerie.com/wp-content/uploads/2016/04/SmashedTrad-1.png",
+// "quantity":1}]}
 
   // Inserts data into orders table and returns the order_id
       knex('orders')
@@ -78,31 +88,38 @@ router.post('/order', (req, res) => {
           console.log(order_id)
           return order_id
         })
-        .then (order_id => console.log(`Successful order submission! The order_id is: ${order_id}`))
+        .then (order_id => {
+          console.log(`Successfull order submission! The order_id is: ${order_id}`);
+          // res.render('users/:id/active', { order_id });
+          return order_id
+        })
+        .then((order_id) => {
+          orderItems.map((orderItems) => {
+            orderItems['order_id'] = Number(order_id)
+          })
+          orderItems.forEach(item => {
+            knex('food_orders')
+            .insert(item).then(console.log)
+          })
+        })
         .catch((err, result) => {
           if(err){
             return console.log(`Error: ${err}`);
           } else {
             console.log(result);
             console.log(`Successfull order submission! The order_id is: ${order_id}`);
-            // res.json({url: `/user/${order_id}`});
+
           }
         });
-    // },
-    // (data, callback) => {
     //   // Sets the orderID, which gets called on redirect in the url. Order_id is added to
-    //   // each item before insertion into product_order table.
-    //   order_id = data[0]
-    //   orderItems.map((orderItems) => {
-    //     orderItems['order_id'] = order_id
-    //   })
-    //   console.log('Order items', orderItems);
+    //   // each item that user orders before insertion into food_order table.
+      // order_id = data[0]
+      // console.log('Order items', orderItems);
     //   // knex batch insert requires an array.
     //   return knex.batchInsert('food_orders', orderItems)
-    //     .then(response => callback(null, "done"))
-    //     .catch(callback);
-    // },
-  // ], (err, result) => {
+
+
+    // },(err, result) => {
     // if(err){
       // return console.log(`Error: ${err}`);
     // } else {
@@ -118,29 +135,29 @@ router.post('/order', (req, res) => {
     res.render('cart', {user});
   })
 
-  // Render a specific order
-  router.get('/:orderID', (req, res) => {
-    const orderID = Number(req.params.orderID)
-    return knex.from('food_orders')
-      .innerJoin('orders', 'food_orders.order_id', 'orders.id')
-      .innerJoin('products', 'food_orders.item_id', 'foods.id')
-      .select(orderID, 'foods.name', 'foods.price', 'food_orders.quantity', 'orders.time')
-      .where('order_id', '=', orderID)
-      .then((allFoods) => {
-        const locals = {
-          products: allFoods,
-          orderID: orderID
-        };
-          if (locals.products.length === 0) {
-            res.redirect('/user/menu');
-          } else {
-            res.render('order_confirmation', locals);
-          }
-      })
-      .catch((err) => {
-        console.log("Knex query failed", err)
-      })
-      res.render('order_confirmation', orderConfirm);
-  })
+  // // Render a specific order
+  // router.get('/:orderID', (req, res) => {
+  //   const orderID = Number(req.params.orderID)
+  //   return knex.from('food_orders')
+  //     .innerJoin('orders', 'food_orders.order_id', 'orders.id')
+  //     .innerJoin('products', 'food_orders.item_id', 'foods.id')
+  //     .select(orderID, 'foods.name', 'foods.price', 'food_orders.quantity', 'orders.time')
+  //     .where('order_id', '=', orderID)
+  //     .then((allFoods) => {
+  //       const locals = {
+  //         products: allFoods,
+  //         orderID: orderID
+  //       };
+  //         if (locals.products.length === 0) {
+  //           res.redirect('/user/menu');
+  //         } else {
+  //           res.render('order_confirmation', locals);
+  //         }
+  //     })
+  //     .catch((err) => {
+  //       console.log("Knex query failed", err)
+  //     })
+  //     res.render('order_confirmation', orderConfirm);
+  // })
   return router;
 }
