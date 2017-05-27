@@ -63,7 +63,7 @@ module.exports = (knex) => {
   router.post('/order', (req, res) => {
     // Checks for userID in cookie/session if user validation can be implemented
     // const userID        = req.session.user_id
-    const userID = 4; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
+    const userID = 1; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
     console.log(req.body.cart);
     const cart = JSON.parse(req.body.cart)
     const total = calculateTotal(cart)
@@ -71,6 +71,7 @@ module.exports = (knex) => {
     // const message       = createOrderMessage(cart.foods)
     let order_id;
 
+    console.log(orderItems)
     // "foods":[
     // {"item_id":8,
     // "name":"Smashed Traditional",
@@ -115,6 +116,29 @@ module.exports = (knex) => {
           console.log(`Successfull order submission! The order_id is: ${order_id}`);
         }
       });
+  });
+
+  router.get('/:id/orders', (req, res) => {
+    // Checks for userID in cookie/session if user validation can be implemented
+    // const userID        = req.session.user_id
+    const userID = req.params.id; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
+
+    let order_id;
+
+    // Inserts data into orders table and returns the order_id
+    knex.from('food_orders')
+      .innerJoin('orders', 'food_orders.order_id', 'orders.id')
+      .innerJoin('foods', 'food_orders.item_id', 'foods.id')
+      .select()
+      .where('user_id', '=', userID)
+      .then(data => {
+        let orders = {}
+        data.forEach(item => {
+          let id = item.order_id
+          orders[id] ? orders[id].push(item) : orders[id] = [item]
+        })
+        res.render('user_orders', {orders})
+      })
   });
 
   // Render cart when user clicks on cart icon
