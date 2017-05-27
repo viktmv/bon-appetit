@@ -2,7 +2,7 @@ $(() => {
   $('#loginForm').on('submit', function(e) {
     e.preventDefault()
     console.log('auth script running')
-    
+
     let username = $('#username').val()
     let password = $('#pwd').val()
 
@@ -34,7 +34,7 @@ $(() => {
       method: 'POST',
       data: { restaname, password }
     })
-    .done((data) => { if (data.length > 0) window.location.reload() })
+    .done((data) => { if (data.length > 0) window.location = '/restaurants/order_status' })
     .fail(err => console.log(err))
   })
 })

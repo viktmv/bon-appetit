@@ -8,8 +8,15 @@ body h1 {
 #main-nav {
   opacity: 0.5;
   background-color: rgba(0, 0, 0, .5);
-  .input-group {
 
+  a {
+    color: #fff;
+    &:hover {
+      color: #337ab7;
+    }
+  }
+  .navbar-brand {
+    color: #fff;
   }
   &:hover {
     opacity: .9;

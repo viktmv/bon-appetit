@@ -9,11 +9,11 @@
       </div>
     </div>
   </div>
-
+  <form method="POST" action="/users/order" id="checkout">
+    <button id="order-submit" type="submit" class="checkout new-submit-btn" class="btn btn-primary btn-lg">Submit Order!</button>
+  </form>
   <div class="upper-footer" id="footer">
-    <form method="POST" action="/users/order" id="checkout">
-      <input id="order-submit" type="submit" class="checkout" class="btn btn-primary btn-lg" value="Checkout"></input>
-    </form>
-    <span class="total upper">  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Total: $<span class="total-amount" id="total"></span></span>
+      <!-- <input id="order-submit" type="submit" class="checkout" class="btn btn-primary btn-lg" value="Submit Order!"></input> -->
+    <!-- <span class="total upper">  <i class="fa fa-shopping-cart" aria-hidden="true"></i> Total: $<span class="total-amount" id="total"></span></span> -->
   </div>
 </div>

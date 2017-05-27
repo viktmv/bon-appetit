@@ -7,25 +7,6 @@ const twilio = require('../public/scripts/twilio');
 module.exports = (knex) => {
   // all routes are prepended with /restaurants
 
-  // get /order_status will render the order status page for the restaurants
-  // checking on new orders
-  // localhost:8080/restaurants/order_status
-  router.get('/order_status', (req, res) => {
-    const locals = {};
-    return knex('orders')
-      .join('users', 'orders.user_id', 'users.id')
-      .select()
-      .then(function(userOrders) {
-        return knex('food_orders')
-          .innerJoin('orders', 'food_orders.order_id', 'orders.id')
-          .innerJoin('foods', 'food_orders.item_id', 'foods.id')
-          .select()
-          .then(function(foodOrders) {
-            res.render('orders_status', {userOrders: userOrders, foodOrders: foodOrders });
-          });
-    });
-  });
-
   router.post('/order_status/:id', (req, res) => {
     const orderid = req.params.id;
     const time = req.body.time;
@@ -58,6 +39,41 @@ module.exports = (knex) => {
     });
   });
 
+  router.get('/order_status', (req, res) => {
+    const locals = {};
+    return knex('orders')
+      .join('users', 'orders.user_id', 'users.id')
+      .select()
+      .then(function(userOrders) {
+        return knex('food_orders')
+          .innerJoin('orders', 'food_orders.order_id', 'orders.id')
+          .innerJoin('foods', 'food_orders.item_id', 'foods.id')
+          .select()
+          .then(function(foodOrders) {
+
+            let data = {}
+            data.orders = {}
+            userOrders.forEach(order => {
+              data.name = `${order.first_name} ${order.last_name}`
+            })
+
+            foodOrders.forEach(order => {
+              let id = order.order_id
+              if (data.orders[id]) {
+                data.orders[id].price = order.total_price;
+                data.orders[id].items.push(order.name)
+              }
+              else {
+                data.orders[id] = { items: []}
+              }
+            })
+            console.log(userOrders)
+            console.log('****************')
+            console.log(foodOrders)
+            res.render('orders_status', {data});
+          });
+    });
+  });
 
 
 router.post('/done/:id', (req, res) => {
@@ -123,7 +139,7 @@ router.post('/done/:id', (req, res) => {
     .then((restaData) => {
       if (restaData.length === 0) return res.sendStatus(404)
       req.session.restaname = restaData[0].restaname
-      res.status(200).send(restaData)
+      res.redirect('/restaurants/order_status')
     })
     .catch(err => {
       console.log('something happend', err)
