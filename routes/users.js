@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+const twilio = require('../public/scripts/twilio');
 
 const createOrder = (cart) => {
   const order = []
@@ -24,20 +25,20 @@ const calculateTotal = (cart) => {
   return total * 1.13;
 }
 
-// // Function to create message from order. String inserts the item name and quantity,
-// // pluralizes the name if the quantity is greater than 1. Seperates items with commas and replaces
-// // the last commas with 'and'
-// const createOrderMessage = (order) => {
-//   const messageArray = []
-//   order.forEach((item) => {
-//     if (item.quantity > 1) {
-//       messageArray.push(`${item.quantity} ${item.name}s`)
-//     } else {
-//       messageArray.push(`${item.quantity} ${item.name}`)
-//     }
-//   })
-//   return messageArray.join(', ').replace(/,(?=[^,]*$)/, ' and')
-// }
+// Function to create message from order. String inserts the item name and quantity,
+// pluralizes the name if the quantity is greater than 1. Seperates items with commas and replaces
+// the last commas with 'and'
+const createOrderMessage = (order) => {
+  const messageArray = []
+  order.forEach((item) => {
+    if (item.quantity > 1) {
+      messageArray.push(`${item.quantity} ${item.name}s`)
+    } else {
+      messageArray.push(`${item.quantity} ${item.name}`)
+    }
+  })
+  return messageArray.join(', ').replace(/,(?=[^,]*$)/, ' and')
+}
 
 module.exports = (knex) => {
   // All routes get prepended with /users
@@ -65,10 +66,10 @@ module.exports = (knex) => {
     // const userID        = req.session.user_id
     const userID = 4; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
     console.log(req.body.cart);
-    const cart = JSON.parse(req.body.cart)
-    const total = calculateTotal(cart)
-    const orderItems = createOrder(cart)
-    // const message       = createOrderMessage(cart.foods)
+    const cart        = JSON.parse(req.body.cart)
+    const total       = calculateTotal(cart)
+    const orderItems  = createOrder(cart)
+    const message     = createOrderMessage(cart.foods)
     let order_id;
 
     // "foods":[
@@ -104,7 +105,10 @@ module.exports = (knex) => {
         return order_id
       })
       .then((order_id) => {
-        res.json({url: `order/${order_id}`})
+        // ACTIVE THIS TWILIO MESSAGE WHEN WE DEMO
+        // COMMENTED OUT FOR TESTING PURPOSES
+        twilio.message('Dong', message, 'Smokes Poutinerie');
+        res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
       })
       .catch((err, result) => {

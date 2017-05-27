@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+const twilio = require('../public/scripts/twilio');
 
 module.exports = (knex) => {
   // all routes are prepended with /restaurants
@@ -9,28 +10,6 @@ module.exports = (knex) => {
   // get /order_status will render the order status page for the restaurants
   // checking on new orders
   // localhost:8080/restaurants/order_status
-  router.post('/order_status/:id', (req, res) => {
-    const orderid = req.params.id;
-    const time = req.body.time;
-
-    console.log(req.body)
-    return knex('orders')
-    .where('orders.id', '=', orderid)
-    .update({time: time})
-    .then(function() {
-      const sms = {};
-      return knex('orders')
-      .innerJoin('users', 'orders.user_id', 'users.id')
-      .select()
-      .where('orders.id', '=', orderid)
-      .then(function(result) {
-        sms.user = result;
-      })
-    })
-    .then(function() {
-      res.redirect('/restaurants/order_status');
-    });
-  });
   router.get('/order_status', (req, res) => {
     const locals = {};
     return knex('orders')
@@ -46,6 +25,39 @@ module.exports = (knex) => {
           });
     });
   });
+
+  router.post('/order_status/:id', (req, res) => {
+    const orderid = req.params.id;
+    const time = req.body.time;
+
+    //Console log orderID
+    console.log('Order ID', orderid);
+    // Console log the entered time within the order_status
+    console.log('Entered time', req.body.time);
+
+    return knex('orders')
+    .where('orders.id', '=', orderid)
+    .update({time: time})
+    .then(function() {
+      const sms = {};
+      return knex('orders')
+      .innerJoin('users', 'orders.user_id', 'users.id')
+      .select()
+      .where('orders.id', '=', orderid)
+      .then(function(result) {
+        sms.user = result;
+        // Console log the db query
+        console.log('Result', result);
+      })
+      // . then(function(result) {
+      //   twilio.message(sms.user[0].first_name, 'Smokes Poutinerie', sms.user[0].time, `http://localhost:8000/users/${orderid}`);
+      // });
+    })
+    .then(function() {
+      res.redirect('/restaurants/order_status');
+    });
+  });
+
 
 
 router.post('/done/:id', (req, res) => {
@@ -68,6 +80,8 @@ router.post('/done/:id', (req, res) => {
           .then(function(result) {
             sms.user = result;
             console.log('sms.user', result);
+          }).then(function () {
+            twilio.complete(sms.user[0].first_name, 'Smokes Poutinerie', `http://localhost:8000/users/${orderid}`);
           }).then(function() {
             res.redirect('/restaurants/order_status');
           });
