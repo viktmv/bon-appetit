@@ -1,19 +1,27 @@
 .item {
     margin: 25px 0;
-
+    border: 1px solid black;
+    border-radius: 25px;
+    background-color: #fff;
     .img-responsive {
-      max-width: 100%;
+      max-width: 40%;
+      margin: 20px 0 10px 20px;
       margin-bottom: 10px;
+      border: 1px solid #eee;
+      border-radius: 40px;
     }
-
+    .item-info {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 15px 0 15px;
+    }
     .top-item {
-
-      p {
-        display: inline;
+      text-align: right;
+      .food-price {
+        font-size: 1.5em;
       }
-
       .add-item {
-        background-color: #000000;
+        // background-color: #000000;
         border-radius: 5px;
         // border: none;
         // font-size: x-large;
@@ -21,17 +29,35 @@
         float: right;
       }
     }
+    .description {
+      padding-bottom: 15px;
+    }
 }
 
 #mini-cart {
   border-radius: 5px;
   font-size: large;
-  background-color: #6F90A2;
+  // background-color: #6F90A2;
   color: white;
   padding: 0 15px;
   margin: 10px 10px;
 }
 
+.site-wrapper {
+
+  // background-color: #EEE;
+  background: url('../images/pineappples.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: fixed;
+  color: #000;
+}
+
+.checkout {
+  .toggle-cart {
+    background-color: none;
+  }
+}
 .partial-cart {
   width: 100%;
   position: fixed;
@@ -63,7 +89,23 @@
   z-index: 99999;
 }
 
+.new-submit-btn {
+  display: block;
+  // position: fixed;
+  padding: 15px;
+  font-size: 1.5em;
+  background-color: #fff;
+  margin: 0 auto;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  outline: none;
+}
+
 .order-wrapper {
   max-width: 90%;
   margin: 0 auto;
+}
+
+#main-nav.navbar {
+  opacity: 1;
 }

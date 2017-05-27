@@ -60,7 +60,10 @@ const createCartItem = (cartItem) => {
 
 const createSubtotal = () => {
   subTotal = 0;
-  const cartItems = JSON.parse(localStorage.getItem('cart')).foods;
+  let cart = JSON.parse(localStorage.getItem('cart'))
+  if (!cart) return document.querySelector('#order-submit').disabled = true
+  else document.querySelector('#order-submit').disabled = false
+  const cartItems = cart.foods;
 
   for (item in cartItems) {
     subTotal += roundMoney(cartItems[item].price * cartItems[item].quantity);

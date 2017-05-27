@@ -14,23 +14,39 @@
     float: right;
   }
 
-
   .checkout {
-    float: right;
-    border-radius: 5px;
-    font-size: large;
-    background-color: #6F90A2;
-    color: white;
-    padding: 0 15px;
-    margin: 10px 10px;
-    }
+    .toggle-cart {
+      float: right;
+      border-radius: 5px;
+      font-size: large;
+      background-color: #6F90A2;
+      color: white;
+      padding: 0 15px;
+      margin: 10px 10px;
 
-  .checkout:hover {
-    background-color: #477187;
+      &:hover {
+        background-color: #477187;
+      }
+    }
   }
+
+#checkout {
+  float: right;
+  border-radius: 5px;
+  font-size: large;
+  color: white;
+  padding: 0 15px;
+  margin: 10px 10px;
+
+  input {
+    background-color: rgb(26, 113, 207);
+    border-radius: 5px;
+  }
+}
 
   .checkout-hidden {
     visibility: hidden;
   }
+
 
 }
