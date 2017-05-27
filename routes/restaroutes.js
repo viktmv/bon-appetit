@@ -9,6 +9,28 @@ module.exports = (knex) => {
   // get /order_status will render the order status page for the restaurants
   // checking on new orders
   // localhost:8080/restaurants/order_status
+  router.post('/order_status/:id', (req, res) => {
+    const orderid = req.params.id;
+    const time = req.body.time;
+
+    console.log(req.body)
+    return knex('orders')
+    .where('orders.id', '=', orderid)
+    .update({time: time})
+    .then(function() {
+      const sms = {};
+      return knex('orders')
+      .innerJoin('users', 'orders.user_id', 'users.id')
+      .select()
+      .where('orders.id', '=', orderid)
+      .then(function(result) {
+        sms.user = result;
+      })
+    })
+    .then(function() {
+      res.redirect('/restaurants/order_status');
+    });
+  });
   router.get('/order_status', (req, res) => {
     const locals = {};
     return knex('orders')
@@ -25,27 +47,6 @@ module.exports = (knex) => {
     });
   });
 
-  router.post('/order_status/:id', (req, res) => {
-  const orderid = req.params.id;
-  const time = req.body.time;
-
-  return knex('orders')
-    .where('orders.id', '=', orderid)
-    .update({time: time})
-    .then(function() {
-      const sms = {};
-      return knex('orders')
-        .innerJoin('users', 'orders.user_id', 'users.id')
-        .select()
-        .where('orders.id', '=', orderid)
-        .then(function(result) {
-          sms.user = result;
-        })
-    })
-    .then(function() {
-      res.redirect('/restaurants/order_status');
-  });
-});
 
 router.post('/done/:id', (req, res) => {
 
