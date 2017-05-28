@@ -143,7 +143,7 @@ module.exports = (knex) => {
           let id = item.order_id
           orders[id] ? orders[id].push(item) : orders[id] = [item]
         })
-        res.render('user_orders', {orders})
+        res.render('user_orders', {orders, user: userID})
       })
   });
 
