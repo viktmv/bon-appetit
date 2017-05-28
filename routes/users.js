@@ -108,7 +108,7 @@ module.exports = (knex) => {
       .then((order_id) => {
         // ACTIVE THIS TWILIO MESSAGE WHEN WE DEMO
         // COMMENTED OUT FOR TESTING PURPOSES
-        twilio.message('Dong', message, 'Smokes Poutinerie');
+        // twilio.message('Dong', message, 'Smokes Poutinerie');
         res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
       })
