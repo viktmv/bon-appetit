@@ -15,7 +15,6 @@
 
   <!-- Include stylesheets -->
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/carousel.css">
 
   <!-- authentication script -->
   <script src="scripts/authentication.js"></script>
@@ -27,13 +26,17 @@
     <!-- HEADER OF WEBSITE  -->
     <div class='jumbotron jumbotron-fluid center' id='header'>
       <div class='container-fluid'>
-        <h1>FOOD FROM TORONTO'S BEST RESTAURANTS</h1>
-        <p>Indulge</p>
-        <p><a href='/users/menu' class='btn btn-success btn-lg'>Menus</a></p>
+        <h1>A smile in every scoop.</h1>
+        <% if (user) { %>
+          <p><a href='/users/menu' class='btn btn-success btn-lg'>Our Menu</a></p>
+          <p><i>From Toronto's Finest Restaurants</i></p>
+        <% } else { %>
+          <p> <img src="images/blue_welcome.svg" width="300"></p>
       </div>
       <div class="ready-links">
-        <p class='subtitle'>Ready to Order?&nbsp;<a href='#'><span class='main-links'>Login</span></a> or <a href='/register'><span class='main-links'>Register</span></a></p>
+        <p class='subtitle'><a href='#'><span class='main-links'>Login</span></a> or <a href='/register'><span class='main-links'>Register</span></a></p>
       </div>
+      <% } %>
     </div>
 
     <video poster="https://cdn.dribbble.com/users/849113/screenshots/2668825/icecream.gif" id="bgvid" playsinline autoplay muted loop>
@@ -42,6 +45,7 @@
     </video>
 
     <!-- https://media.giphy.com/media/hgpGAn0ohglHO/giphy.gif -->
+    <!-- Poutine -->
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

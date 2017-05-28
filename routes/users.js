@@ -64,7 +64,7 @@ module.exports = (knex) => {
   router.post('/order', (req, res) => {
     // Checks for userID in cookie/session if user validation can be implemented
     // const userID        = req.session.user_id
-    const userID = 4; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
+    const userID = 1; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
     console.log(req.body.cart);
     const cart        = JSON.parse(req.body.cart)
     const total       = calculateTotal(cart)
@@ -108,7 +108,7 @@ module.exports = (knex) => {
       .then((order_id) => {
         // ACTIVE THIS TWILIO MESSAGE WHEN WE DEMO
         // COMMENTED OUT FOR TESTING PURPOSES
-        twilio.message('Dong', message, 'Smokes Poutinerie');
+        twilio.message('Dong', message, 'Ice Scream');
         res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
       })
