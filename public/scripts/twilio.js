@@ -5,7 +5,7 @@ const authToken = 'b87d2730c2dc5222410232e5d6cd4b8b';
 const client = require('twilio')(accountSid, authToken);
 
 const messageCustomer = (customer, restaurant, time, order_url) => {
-const message = `Hello ${(customer)}, your order from ${restaurant} should be ready in ${time} mins! You can check the ETA at ${order_url}.`
+const message = `Hello ${(customer)}, your order from ${restaurant} should be ready in ${time}! You can check the ETA at ${order_url}.`
 
   client.messages.create({
     to: "+14162770776",
