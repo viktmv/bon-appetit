@@ -136,14 +136,12 @@ module.exports = (knex) => {
       .select()
       .where('user_id', '=', userID)
       .then(data => {
-        // DONG TO VIKTOR - Include let user = req.session.username || '' here
-        // to be able to generate the partials header
         let orders = {}
         data.forEach(item => {
           let id = item.order_id
           orders[id] ? orders[id].push(item) : orders[id] = [item]
         })
-        res.render('user_orders', {orders})
+        res.render('user_orders', {orders, user: userID})
       })
   });
 

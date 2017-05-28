@@ -22,42 +22,41 @@
 </head>
 
 <body>
+  <!-- NAV BAR -->
+  <% include ./partials/_header %>
 
-
-  <nav class="secondary-nav">
-    <a href="/users/menu">Back to the menu</a>
-  </nav>
     <div class='jumbotron' id='header'>
       <div class='container-fluid'>
         <h1>Your Active Orders</h1>
       </div>
     </div>
+
     <div>
     <% Object.keys(orders).forEach((id) => {%>
      <div class="top-item" id="item-details" >
      <table>
       <tr>
         <th class="hd">Order Number</th>
-        <th class="hd">Price Total</th>
+        <th class="hd">Total Price</th>
         <th class="hd">ETA</th>
-        <th class="hd">When</th>
-        <th class="hd">Ready?</th>
-        <th class="hd">Some buttons</th>
+        <th class="hd">Ordered</th>
+        <th class="hd">Order Complete?</th>
+        <th class="hd">---------------------</th>
       </tr>
-      <tr>
+      <tr id='details'>
         <td class="text"><%= orders[id][0].order_id %></td>
-        <td class="text"><%= orders[id][0].total_price %></td>
+        <td class="text">$<%= orders[id][0].total_price %></td>
         <td class="text"><%= orders[id][0].time %></td>
         <td class="text"><%= orders[id][0].date_created.toString().split('GMT')[0] %></td>
         <td class="text"><%= orders[id][0].complete ? 'Yes 😎' : 'Not yet 🤔' %></td>
         <td class="text">
-          <button type="button" class="btn btn-info more-details">See order detais</button>
-          <button type="button" class="btn btn-info contact">Contact the place </button>
+          <button type="button" class="btn btn-success btn-filter more-details">See order details</button>
+          <button type="button" class="btn btn-info contact">Contact</button>
         </td>
         <tr class="extra-details">
-          <td colspan="6">
+          <td id="display-details" colspan="6">
             <% orders[id].forEach(item => { %>
-            <div><%= item.name %></div>
+            <div>You ordered a <%= item.name %><img id='image-details' src='<%= item.image_url %>'></div>
             <% }) %>
           </td>
         </tr>
