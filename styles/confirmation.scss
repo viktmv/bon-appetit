@@ -1,5 +1,5 @@
 body {
-  background-image: url('../images/pineapples.jpg');
+  background-image: url('https://cdn.dribbble.com/users/59947/screenshots/2568439/lollies_dribbble.gif');
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center;
@@ -11,7 +11,10 @@ body {
   min-width: 400px;
   margin: 0 auto;
   margin-top: 100px;
-  color: #555;
+  color: #fff;
+  .order-container {
+    background-color: rgba(0, 0, 0, .5);
+  }
   .eta {
     margin-top: 15px;
     h4 {
@@ -48,6 +51,7 @@ body {
     img {
       display: block;
       margin: 0 auto;
+      color: #fff;
     }
   }
 }

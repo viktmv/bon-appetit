@@ -1,41 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Order Confirmation</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Order Confirmation</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Include stylesheets -->
     <link rel="stylesheet" href="/styles/confirmation.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
+  <!-- Bootstrap Files -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <!-- Include stylesheets -->
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <!-- authentication script -->
+  <script src="../scripts/authentication.js"></script>
+
+</head>
   <body>
   <!-- Nav bar -->
+  <% include ./partials/_header %>
 
   <% console.log(locals) %>
   <div class="container order">
-    <div class="row">
+    <div class="order-container">
+    <div class="row-fluid">
       <div class="col-12 text-center title">
         <h2>Your order is on the way.</h2>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row-fluid">
       <div class="col-12 text-center eta">
         <% if (locals.foods[0].time) { %>
         <h4><strong><%= locals.foods[0].time %> minutes</strong> until you're order is ready.</h4>
         <% } else { %>
-          <h4><strong>20 minutes</strong> until it's ready.</h4>
+          <h4>You will receive a notification you when your <strong>order</strong> is ready.</h4>
         <% } %>
       </div>
     </div>
-    <div class="row">
+    <div class="row-fluid">
       <div class="col-12 text-center order-id">
         Order ID: <%= locals.orderID %>
       </div>
     </div>
-    <div class="row">
+    <div class="row-fluid">
     </div>
     <% let subTotal = 0 %>
     <% locals.foods.forEach((food) => {%>
-    <div class="row">
+    <div class="row-fluid">
 
       <div class="col-5 text-left">
         <%= food.quantity %> x <%= food.name %>
@@ -46,7 +67,7 @@
     </div>
     <% subTotal += food.price * food.quantity %>
     <% }); %>
-    <div class="row totals">
+    <div class="row-fluid totals">
       <hr>
       <div class="col-10 text-right">
         <p>Subtotal $<%= subTotal %><br>
@@ -55,7 +76,8 @@
       </div>
       <div class="col-2"></div>
     </div>
-    <div class="row thank-you text-center">
+  </div>
+    <div class="row-fluid thank-you text-center">
       <img src="/images/thankyou1.svg" widht="100" height="100" alt="Thank you!">
     </div>
   </div>

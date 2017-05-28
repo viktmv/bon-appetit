@@ -106,9 +106,10 @@ module.exports = (knex) => {
         return order_id
       })
       .then((order_id) => {
-        // ACTIVE THIS TWILIO MESSAGE WHEN WE DEMO
+        // ACTIVATE THIS TWILIO MESSAGE WHEN WE DEMO
         // COMMENTED OUT FOR TESTING PURPOSES
-        twilio.message('Dong', message, 'Ice Scream');
+        // Hard coded name as "Dong" and time as "10"
+        twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
         res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
       })
@@ -165,9 +166,11 @@ module.exports = (knex) => {
       .select()
       .where('order_id', '=', orderID)
       .then((allFoods) => {
+        let user = req.session.username || ''
         const locals = {
           foods: allFoods,
-          orderID: orderID
+          orderID: orderID,
+          user
         };
           console.log(allFoods)
           if (locals.foods.length === 0) {

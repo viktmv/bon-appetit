@@ -1,8 +1,9 @@
 html {
-  background: url('../images/fast.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: fixed;
+  // background: url('../images/fast.jpeg');
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-position: fixed;
+  background: #fff;
 }
 
 .container.all-items {
@@ -19,6 +20,7 @@ html {
     background-color: #fff;
     width: 30% !important;
     height: 300px;
+    overflow: scroll;
     background-color: rgba(255, 255, 255, .5);
     .img-responsive {
       max-width: 40%;
@@ -63,10 +65,10 @@ html {
 .site-wrapper {
   color: #000;
   height: 100%;
-  background: url('../images/fast.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: fixed;
+  // background: url('../images/fast.jpeg');
+  // background-repeat: no-repeat;
+  // background-size: cover;
+  // background-position: fixed;
 }
 
 .checkout {
