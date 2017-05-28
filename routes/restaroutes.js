@@ -29,10 +29,8 @@ module.exports = (knex) => {
         sms.user = result;
         // Console log the db query
         console.log('Result', result);
-      })
-      // . then(function(result) {
-      //   twilio.message(sms.user[0].first_name, 'Smokes Poutinerie', sms.user[0].time, `http://localhost:8000/users/${orderid}`);
-      // });
+        twilio.message(sms.user[0].first_name, 'Smokes Poutinerie', sms.user[0].time, `http://localhost:8000/users/${orderid}`);
+      });
     })
     .then(function() {
       res.redirect('/restaurants/order_status');
@@ -67,9 +65,6 @@ module.exports = (knex) => {
                 data.orders[id] = { items: []}
               }
             })
-            console.log(userOrders)
-            console.log('****************')
-            console.log(foodOrders)
             res.render('orders_status', {data});
           });
     });
