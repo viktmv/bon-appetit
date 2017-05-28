@@ -24,7 +24,7 @@
             <li class="divider"></li>
             <li><a href="#">One more separated link</a></li>
           </ul> -->
-        <li><a href="/users/1/orders">Check out my orders</a>
+          <% if (user) { %><li><a href="/users/1/orders">Check out my orders</a> <% } %>
       </ul>
       <form id="loginForm" class="navbar-form navbar-right">
         <% if (!user) { %>

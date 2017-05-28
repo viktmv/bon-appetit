@@ -28,12 +28,18 @@
     <div class='jumbotron jumbotron-fluid center' id='header'>
       <div class='container-fluid'>
         <h1>FOOD FROM TORONTO'S BEST RESTAURANTS</h1>
-        <p>Indulge</p>
-        <p><a href='/users/menu' class='btn btn-success btn-lg'>Menus</a></p>
+        <% if (user) { %>
+          <p>Indulge</p>
+          <p><a href='/users/menu' class='btn btn-success btn-lg'>Menus</a></p>
+          <p><i>From Toronto's Finest Restaurants</i></p>
+        <% } else { %>
+          <p> <img src="images/blue_welcome.svg" width="300"></p>
       </div>
       <div class="ready-links">
-        <p class='subtitle'>Ready to Order?&nbsp;<a href='#'><span class='main-links'>Login</span></a> or <a href='/register'><span class='main-links'>Register</span></a></p>
+        <p class='subtitle'>Ready to get some delicious food?<br></p>
+        <p class='subtitle'><a href='#'><span class='main-links'>Login</span></a> or <a href='/register'><span class='main-links'>Register</span></a></p>
       </div>
+      <% } %>
     </div>
 
     <video poster="" id="bgvid" playsinline autoplay muted loop>
