@@ -38,7 +38,7 @@ const createOrderMessage = (order) => {
     }
   });
   return messageArray.join(', ').replace(/,(?=[^,]*$)/, ' and');
-}
+};
 
 module.exports = (knex) => {
   // All routes get prepended with /users
@@ -47,7 +47,7 @@ module.exports = (knex) => {
       .select()
       .from('foods')
       .then((foods) => {
-        let user = req.session.username || ''
+        let user = req.session.username || '';
 
         res.render('menu', {
           user,
@@ -65,20 +65,11 @@ module.exports = (knex) => {
     // Checks for userID in cookie/session if user validation can be implemented
     // const userID        = req.session.user_id
     const userID = 1; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
-    console.log(req.body.cart);
-    const cart        = JSON.parse(req.body.cart)
-    const total       = calculateTotal(cart)
-    const orderItems  = createOrder(cart)
-    const message     = createOrderMessage(cart.foods)
+    const cart = JSON.parse(req.body.cart);
+    const total = calculateTotal(cart);
+    const orderItems = createOrder(cart);
+    const message = createOrderMessage(cart.foods);
     let order_id;
-
-    console.log(orderItems)
-    // "foods":[
-    // {"item_id":8,
-    // "name":"Smashed Traditional",
-    // "price":6.99,
-    // "image_url":"http://smokespoutinerie.com/wp-content/uploads/2016/04/SmashedTrad-1.png",
-    // "quantity":1}]}
 
     // Inserts data into orders table and returns the order_id
     knex('orders')
@@ -88,22 +79,18 @@ module.exports = (knex) => {
         total_price: total
       }])
       .then((order_id) => {
-        console.log(order_id)
-        return order_id
-      })
-      .then(order_id => {
         console.log(`Successfull order submission! The order_id is: ${order_id}`);
-        return order_id
+        return order_id;
       })
       .then((order_id) => {
         orderItems.map((orderItems) => {
-          orderItems['order_id'] = Number(order_id)
-        })
+          orderItems['order_id'] = Number(order_id);
+        });
         orderItems.forEach(item => {
           knex('food_orders')
-            .insert(item).then(console.log)
-        })
-        return order_id
+            .insert(item).then(console.log);
+        });
+        return order_id;
       })
       .then((order_id) => {
         // ACTIVATE THIS TWILIO MESSAGE WHEN WE DEMO
@@ -132,8 +119,6 @@ module.exports = (knex) => {
     // const userID        = req.session.user_id
     const userID = req.params.id; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
 
-    let order_id;
-
     // Inserts data into orders table and returns the order_id
     knex.from('food_orders')
       .innerJoin('orders', 'food_orders.order_id', 'orders.id')
@@ -141,52 +126,48 @@ module.exports = (knex) => {
       .select()
       .where('user_id', '=', userID)
       .then(data => {
-        let orders = {}
+        let orders = {};
         data.forEach(item => {
-          let id = item.order_id
-          orders[id] ? orders[id].push(item) : orders[id] = [item]
-        })
-        res.render('user_orders', {orders})
-      })
+          let id = item.order_id;
+          orders[id] ? orders[id].push(item) : orders[id] = [item];
+        });
+        res.render('user_orders', {orders});
+      });
   });
 
   // Render cart when user clicks on cart icon
   router.get('/cart', (req, res) => {
-    let user = req.session.username || ''
+    let user = req.session.username || '';
     res.render('cart', {
       user
     });
-  })
-
-
+  });
 
   // Render a specific order
   router.get('/order/:orderID', (req, res) => {
-    const orderID = req.params.orderID
-    console.log('GET ORDER', orderID)
+    const orderID = req.params.orderID;
+    console.log('GET ORDER', orderID);
     return knex.from('food_orders')
       .innerJoin('orders', 'food_orders.order_id', 'orders.id')
       .innerJoin('foods', 'food_orders.item_id', 'foods.id')
       .select()
       .where('order_id', '=', orderID)
       .then((allFoods) => {
-        let user = req.session.username || ''
+        let user = req.session.username || '';
         const locals = {
           foods: allFoods,
           orderID: orderID,
           user
         };
-          console.log(allFoods)
-          if (locals.foods.length === 0) {
-            res.redirect('/users/menu');
-          } else {
-            res.render('order_confirmation', locals);
-          }
+        if (locals.foods.length === 0) {
+          res.redirect('/users/menu');
+        } else {
+          res.render('order_confirmation', locals);
+        }
       })
       .catch((err) => {
-        console.log("Knex query failed", err)
-      })
-      res.render('order_confirmation', orderConfirm);
-  })
+        console.log('Knex query failed', err);
+      });
+  });
   return router;
-}
+};
