@@ -57,14 +57,16 @@ module.exports = (knex) => {
 
             foodOrders.forEach(order => {
               let id = order.order_id
+              console.log('ORDER IS:', order)
               if (data.orders[id]) {
                 data.orders[id].price = order.total_price;
                 data.orders[id].items.push(order.name)
               }
               else {
-                data.orders[id] = { items: []}
+                data.orders[id] = { price: order.total_price, items: [order.name] }
               }
             })
+            console.log('RENDERING DATA:', data)
             res.render('orders_status', {data});
           });
     });
