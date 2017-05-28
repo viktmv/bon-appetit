@@ -31,7 +31,7 @@ const roundMoney = (number) => {
 const createCartItem = (cartItem) => {
   const $item = $(`
     <div class="row" id="cart-item">
-      <div class="">
+      <div class="item-image">
         <img class="img-responsive" src="${cartItem.image_url}" width=150 height=150>
       </div>
       <div class="">
@@ -40,7 +40,7 @@ const createCartItem = (cartItem) => {
           <li class="item-price">$${cartItem.price}</li>
         </ul>
       </div>
-      <div class="">
+      <div class="item-controls">
         <ul class="adjust-item">
           <li>
             <input class="edit-item-quantity" data-id="${cartItem.item_id}" type="number" class="form-control text-center" value="${cartItem.quantity}"></input>
@@ -135,8 +135,8 @@ const displayCartItems = () => {
     });
 
 
-    $('.order-wrapper .edit-item-quantity').on('click', (e) => {
-      $(e.target).on('change', (e) => {
+    $('.order-wrapper .edit-item-quantity').on('change', (e) => {
+        console.log('first')
         let quantity = $(e.target).val();
         let price = Number($(e.target).parents('div#cart-item.row').find('.item-price').html().slice(1));
         let item = $(e.target).closest('.edit-item-quantity');
@@ -144,14 +144,13 @@ const displayCartItems = () => {
 
         let newPrice = '$' + roundMoney(quantity * price);
 
-        $(e.target).parents('div#cart-item.row').children('div:eq(3)').children().html(newPrice);
+        $(e.target).parents('div#cart-item.row').find('.item-subtotal').html(newPrice);
 
         $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
         $('.totals').remove();
 
         renderTotals();
 
-      })
     })
   }
 }

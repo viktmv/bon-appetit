@@ -86,7 +86,7 @@ html {
 
  .container.order {
     position: relative;
-    width: 70%;
+    width: 50%;
     margin: 30px auto;
     padding: 20px;
     background-color: #eee;
@@ -104,7 +104,7 @@ html {
   width: 30px;
   height: 30px;
   top: 0;
-  right: -1px;
+  right: 0;
   padding: 0;
   border-radius: 0 0 0 15px;
   border-left: 1px solid #777;
@@ -128,6 +128,53 @@ html {
 .order-wrapper {
   max-width: 90%;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  .totals {
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+  }
+  .row {
+    margin-top: 25px;
+    padding-left: 50px;
+    padding-right: 50px;
+
+  }
+  .item-image img {
+    margin-left: 20px;
+    border-radius: 15px;
+    border: 2px solid #fff;
+  }
+  .item-subtotal {
+    font-size: 1.5em;
+  }
+  .item-info {
+    list-style: none;
+    .item-price {
+      font-size: 1.2em;
+    }
+  }
+  .item-controls {
+    .adjust-item {
+      display: flex;
+      justify-content: flex-start;
+      .edit-item-quantity {
+        width: 40px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+      }
+      .delete-item {
+        margin-left: 15px;
+        height: 25px;
+        border-radius: 5px;
+        border: 1px solid #eee;
+        background-color: #fff;
+      }
+    }
+
+  }
 }
 
 #main-nav.navbar {
