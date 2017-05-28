@@ -48,7 +48,6 @@ module.exports = (knex) => {
       .from('foods')
       .then((foods) => {
         let user = req.session.username || ''
-
         res.render('menu', {
           user,
           foods
@@ -65,14 +64,14 @@ module.exports = (knex) => {
     // Checks for userID in cookie/session if user validation can be implemented
     // const userID        = req.session.user_id
     const userID = 1; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
-    console.log(req.body.cart);
+    // console.log(req.body.cart);
     const cart        = JSON.parse(req.body.cart)
     const total       = calculateTotal(cart)
     const orderItems  = createOrder(cart)
     const message     = createOrderMessage(cart.foods)
     let order_id;
 
-    console.log(orderItems)
+    // console.log(orderItems)
     // "foods":[
     // {"item_id":8,
     // "name":"Smashed Traditional",
@@ -88,7 +87,7 @@ module.exports = (knex) => {
         total_price: total
       }])
       .then((order_id) => {
-        console.log(order_id)
+        // console.log(order_id)
         return order_id
       })
       .then(order_id => {
@@ -137,6 +136,8 @@ module.exports = (knex) => {
       .select()
       .where('user_id', '=', userID)
       .then(data => {
+        // DONG TO VIKTOR - Include let user = req.session.username || '' here
+        // to be able to generate the partials header
         let orders = {}
         data.forEach(item => {
           let id = item.order_id
@@ -159,7 +160,7 @@ module.exports = (knex) => {
   // Render a specific order
   router.get('/order/:orderID', (req, res) => {
     const orderID = req.params.orderID
-    console.log('GET ORDER', orderID)
+    // console.log('GET ORDER', orderID)
     return knex.from('food_orders')
       .innerJoin('orders', 'food_orders.order_id', 'orders.id')
       .innerJoin('foods', 'food_orders.item_id', 'foods.id')
@@ -172,7 +173,7 @@ module.exports = (knex) => {
           orderID: orderID,
           user
         };
-          console.log(allFoods)
+          // console.log(allFoods)
           if (locals.foods.length === 0) {
             res.redirect('/users/menu');
           } else {
