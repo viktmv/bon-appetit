@@ -12,9 +12,9 @@ module.exports = (knex) => {
     const time = req.body.time;
 
     //Console log orderID
-    console.log('Order ID', orderid);
+    // console.log('Order ID', orderid);
     // Console log the entered time within the order_status
-    console.log('Entered time', req.body.time);
+    // console.log('Entered time', req.body.time);
 
     return knex('orders')
     .where('orders.id', '=', orderid)
@@ -23,13 +23,13 @@ module.exports = (knex) => {
       const sms = {};
       return knex('orders')
       .innerJoin('users', 'orders.user_id', 'users.id')
-      .select('users.first_name', 'orders.time')
+      .select('users.first_name', 'orders.time', 'users.id')
       .where('orders.id', '=', orderid)
       .then(function(result) {
         sms.user = result;
         // Console log the db query
-        console.log('SMS SENT');
-        twilio.message(sms.user[0].first_name, 'Ice Sream', sms.user[0].time, `http://localhost:8080/users/${sms.user[0].id}/orders`);
+        console.log('sms.user', result);
+        twilio.message(sms.user[0].first_name, 'Ice Scream', sms.user[0].time, `http://localhost:8080/users/${sms.user[0].id}/orders`);
       });
     })
     .then(function() {
@@ -57,7 +57,7 @@ module.exports = (knex) => {
 
             foodOrders.forEach(order => {
               let id = order.order_id
-              console.log('ORDER IS:', order)
+              // console.log('ORDER IS:', order)
               if (data.orders[id]) {
                 data.orders[id].price = order.total_price;
                 data.orders[id].items.push(order.name)
@@ -66,7 +66,7 @@ module.exports = (knex) => {
                 data.orders[id] = { price: order.total_price, items: [order.name] }
               }
             })
-            console.log('RENDERING DATA:', data)
+            // console.log('RENDERING DATA:', data)
             res.render('orders_status', {data});
           });
     });
@@ -79,7 +79,7 @@ router.post('/done/:id', (req, res) => {
     const done = true;
     const notDone = false;
 
-    console.log(orderid);
+    // console.log(orderid);
 
     return knex('orders')
         .where('orders.id', '=', orderid)
@@ -93,7 +93,7 @@ router.post('/done/:id', (req, res) => {
           .where('orders.id', '=', orderid)
           .then(function(result) {
             sms.user = result;
-            console.log('sms.user', result);
+            // console.log('sms.user', result);
           }).then(function () {
             twilio.complete(sms.user[0].first_name, 'Ice Scream', `http://localhost:8080/users/${sms.user[0].id}/orders`);
             // ${orderid}

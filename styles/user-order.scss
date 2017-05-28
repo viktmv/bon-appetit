@@ -1,8 +1,16 @@
+body {
+  background-image: url('https://cdn.dribbble.com/users/778581/screenshots/2049806/foodtruck_dribble.gif');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 table {
     border-collapse: collapse;
     width: 60%;
-    border: 1px solid white;
-    border-spacing: 1rem;
+    border: 1px solid black;
+    // border-spacing: 1rem;
     margin: 0 auto;
     color: #000;
     .btn {
@@ -24,9 +32,9 @@ table {
 }
 th, td {
   position: relative;
-   border: 1px solid white;
+  //  border: 1px solid white;
    padding: 25px;
-   text-align:left;
+   text-align:center;
 }
 th {
   height: 30px;
@@ -36,8 +44,26 @@ th {
 
 tr{
   height: 25px;
+  border: 1px solid black;
+
+  .hd {
+    text-align: center;
+  }
+
 }
 
 tr:hover {
   background-color: #f5f5f5;
+}
+
+#image-details {
+  width: 10%;
+}
+
+#display-details {
+  background-color: #fff;
+}
+
+#details {
+  background-color: #fff;
 }
