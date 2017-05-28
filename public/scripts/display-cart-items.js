@@ -2,16 +2,16 @@ const deleteCartItem = (id) => {
   let cart = getCart();
   let matchingProduct = cart.foods.findIndex((food) => {
     return food.item_id === id;
-  })
+  });
   cart.foods.splice(matchingProduct, 1);
   setCart(cart);
-}
+};
 
 const editCart = (id, quantity) => {
-  let cart = getCart()
+  let cart = getCart();
   let matchingProduct = cart.foods.findIndex((food) => {
     return food.item_id === id;
-  })
+  });
   // If new quantity is > 0, quantity will be updated
   if (quantity > 0) {
     cart.foods[matchingProduct].quantity = quantity;
@@ -25,8 +25,7 @@ const editCart = (id, quantity) => {
 const roundMoney = (number) => {
   number = (Math.round(number * 100) / 100);
   return number;
-}
-// let subTotal = 0;
+};
 
 const createCartItem = (cartItem) => {
   const $item = $(`
@@ -57,25 +56,25 @@ const createCartItem = (cartItem) => {
     </div>
     `);
   return $item;
-}
+};
 
 const createSubtotal = () => {
   subTotal = 0;
-  let cart = JSON.parse(localStorage.getItem('cart'))
-  if (!cart) return document.querySelector('#order-submit').disabled = true
-  else document.querySelector('#order-submit').disabled = false
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  if (!cart) return document.querySelector('#order-submit').disabled = true;
+  else document.querySelector('#order-submit').disabled = false;
   const cartItems = cart.foods;
 
-  for (item in cartItems) {
+  for (let item in cartItems) {
     subTotal += roundMoney(cartItems[item].price * cartItems[item].quantity);
   }
   return subTotal;
 };
 
 const clearTotal = () =>{
-  $('.empty-notice').remove()
-  $('.totals').remove()
-}
+  $('.empty-notice').remove();
+  $('.totals').remove();
+};
 const renderTotals = () => {
   createSubtotal();
 
@@ -91,42 +90,40 @@ const renderTotals = () => {
     </div>
     </div>
     `);
-  }
+};
 let notice = `
   <div class="row empty-notice">
   <div class="col-12 text-center">
   Please select an item from the <a href="/users/menu">menu</a>.
   </div>
   </div>
-  `
+  `;
 const displayCartItems = () => {
-  $('.order-wrapper').html('')
+  $('.order-wrapper').html('');
   if (localStorage.getItem('cart') === null || JSON.parse(localStorage.getItem('cart')).foods.length === 0) {
 
     if ($('.empty-notice').length === 0) {
-      $('.order-wrapper').append(notice)
+      $('.order-wrapper').append(notice);
     }
-    //  $('#checkout').attr('class', 'checkout-hidden')
-     $('.totals').remove()
+    $('.totals').remove();
   } else {
 
-    $('.empty-notice').remove()
+    $('.empty-notice').remove();
     const cartItems = JSON.parse(localStorage.getItem('cart')).foods;
 
-    for (item in cartItems) {
+    for (let item in cartItems) {
       $('.order-wrapper').append(createCartItem(cartItems[item]));
     }
 
     $('.order-wrapper .add-item').on('click', () => {
-      console.log('total added')
       $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
     });
 
     $('.order-wrapper .delete-item').on('click', (e) => {
-      let id = $(e.target).data('id')
+      let id = $(e.target).data('id');
       // Remove item from cart and then call deleteCartItem function.
-      $(e.target).closest('#cart-item').remove()
-      deleteCartItem(id)
+      $(e.target).closest('#cart-item').remove();
+      deleteCartItem(id);
 
       $('.totals').remove();
 
@@ -135,54 +132,51 @@ const displayCartItems = () => {
       $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
     });
 
-
     $('.order-wrapper .edit-item-quantity').on('change', (e) => {
-        let quantity = $(e.target).val();
+      let quantity = $(e.target).val();
 
-        if (quantity < 1) $(e.target).parents('div#cart-item.row').remove()
+      if (quantity < 1) $(e.target).parents('div#cart-item.row').remove();
 
-        let price = Number($(e.target).parents('div#cart-item.row').find('.item-price').html().slice(1));
-        let item = $(e.target).closest('.edit-item-quantity');
-        editCart(item.data('id'), quantity);
+      let price = Number($(e.target).parents('div#cart-item.row').find('.item-price').html().slice(1));
+      let item = $(e.target).closest('.edit-item-quantity');
+      editCart(item.data('id'), quantity);
 
-        let newPrice = '$' + roundMoney(quantity * price);
+      let newPrice = '$' + roundMoney(quantity * price);
 
-        $(e.target).parents('div#cart-item.row').find('.item-subtotal').html(newPrice);
+      $(e.target).parents('div#cart-item.row').find('.item-subtotal').html(newPrice);
 
-        $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
-        $('.totals').remove();
+      $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
+      $('.totals').remove();
 
-        renderTotals();
+      renderTotals();
 
-    })
+    });
   }
-}
+};
 $(() => {
-  $('.partial-cart').hide()
+  $('.partial-cart').hide();
 
-  $('.close-btn').click(function(e) {
-    $(this).closest('.partial-cart').hide()
-  })
-
-  $('#footer .checkout .toggle-cart').click(function() {
-    $('.partial-cart').show()
-    displayCartItems()
-    renderTotals();
-  })
-
-  $('.back').click(e => {
-    e.preventDefault()
-    $('.partial-cart').hide()
-  })
-
-  $('.partial-cart').click(function(e) {
-    let cart = document.querySelector('.partial-cart')
-    if (e.target.contains(cart)) $('.partial-cart').hide()
-  })
-
-  $('.add-item').on('click', () => {
-    console.log('total added')
-    $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
+  $('.close-btn').click(function() {
+    $(this).closest('.partial-cart').hide();
   });
 
-})
+  $('#footer .checkout .toggle-cart').click(function() {
+    $('.partial-cart').show();
+    displayCartItems();
+    renderTotals();
+  });
+
+  $('.back').click(e => {
+    e.preventDefault();
+    $('.partial-cart').hide();
+  });
+
+  $('.partial-cart').click(function(e) {
+    let cart = document.querySelector('.partial-cart');
+    if (e.target.contains(cart)) $('.partial-cart').hide();
+  });
+
+  $('.add-item').on('click', () => {
+    $('.total-amount').html('').append(roundMoney(createSubtotal() * 1.13).toFixed(2));
+  });
+});

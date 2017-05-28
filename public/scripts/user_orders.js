@@ -1,7 +1,5 @@
 $(() => {
-  console.log('running')
   $('.more-details').click(function() {
-
-     $(this).closest('.top-item').find('.extra-details').slideToggle(200)
-  })
-})
+    $(this).closest('.top-item').find('.extra-details').slideToggle(200);
+  });
+});

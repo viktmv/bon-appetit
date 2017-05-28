@@ -22,23 +22,21 @@ $(document).ready(function () {
     const timeData = {
       id: id,
       val: val
-    }
+    };
 
-    if (isEmpty) {
-      alert('Please enter time in minutes to continue.');
-      return;
-    }
+    if (isEmpty) return;
+
 
     $.ajax('/admin/order_status', {
-        method: 'post',
-        data: timeData
+      method: 'post',
+      data: timeData
     })
     .then(function() {
       $('.txt-input').val('');
     })
     .fail(function(error) {
       //display any errors
-        console.error(error);
+      console.error(error);
     });
     return;
   });
@@ -56,12 +54,12 @@ $(document).ready(function () {
       id: id,
       done: done,
       notDone: notDone
-    }
+    };
 
     $.ajax('/admin/done', {
-          method: 'post',
-          data: status
-      })
+      method: 'post',
+      data: status
+    })
       .then(function() {
         $('.txt-input').val('');
       })
@@ -69,6 +67,6 @@ $(document).ready(function () {
         //display any errors
         console.error(error);
       });
-      return;
+    return;
   });
 });

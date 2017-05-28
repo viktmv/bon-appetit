@@ -23,7 +23,7 @@ module.exports = (knex) => {
       .then(function(result) {
         sms.user = result;
         // Console log the db query
-        twilio.message(sms.user[0].first_name, 'Ice Sream', sms.user[0].time, `http://localhost:8080/users/${sms.user[0].id}/orders`);
+        // twilio.message(sms.user[0].first_name, 'Ice Sream', sms.user[0].time, `http://localhost:8080/users/${sms.user[0].id}/orders`);
       });
     })
     .then(function() {
@@ -80,7 +80,7 @@ module.exports = (knex) => {
           .then(function(result) {
             sms.user = result;
           }).then(function () {
-            twilio.complete(sms.user[0].first_name, 'Ice Scream', `http://localhost:8080/users/${sms.user[0].id}/orders`);
+            // twilio.complete(sms.user[0].first_name, 'Ice Scream', `http://localhost:8080/users/${sms.user[0].id}/orders`);
           }).then(function() {
             res.redirect('/restaurants/order_status');
           });
