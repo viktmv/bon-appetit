@@ -23,13 +23,13 @@ module.exports = (knex) => {
       const sms = {};
       return knex('orders')
       .innerJoin('users', 'orders.user_id', 'users.id')
-      .select()
+      .select('users.first_name', 'orders.time')
       .where('orders.id', '=', orderid)
       .then(function(result) {
         sms.user = result;
         // Console log the db query
         console.log('Result', result);
-        twilio.message(sms.user[0].first_name, 'Smokes Poutinerie', sms.user[0].time, `http://localhost:8000/users/${orderid}`);
+        twilio.message(sms.user[0].first_name, 'Smokes Poutinerie', sms.user[0].time, `http://localhost:8000/users/order/${orderid}`);
       });
     })
     .then(function() {
@@ -86,13 +86,15 @@ router.post('/done/:id', (req, res) => {
           const sms = {};
           return knex('orders')
           .innerJoin('users', 'orders.user_id', 'users.id')
-          .select('users.first_name')
+          // select users id?
+          .select('users.first_name', 'users.id')
           .where('orders.id', '=', orderid)
           .then(function(result) {
             sms.user = result;
             console.log('sms.user', result);
           }).then(function () {
-            twilio.complete(sms.user[0].first_name, 'Smokes Poutinerie', `http://localhost:8000/users/${orderid}`);
+            twilio.complete(sms.user[0].first_name, 'Smokes Poutinerie', `http://localhost:8080/users/${sms.user[0].id}/orders`);
+            // ${orderid}
           }).then(function() {
             res.redirect('/restaurants/order_status');
           });
