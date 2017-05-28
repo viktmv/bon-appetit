@@ -67,3 +67,13 @@ video {
     background-size: cover;
     transition: 1s opacity;
 }
+
+.navbar-brand {
+  padding: 0px;
+
+  img {
+    height: 100%;
+    padding: 0px;
+    width: auto;
+  }
+}

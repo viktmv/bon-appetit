@@ -9,6 +9,7 @@ exports.up = function(knex, Promise) {
       table.string('description');
       table.decimal('price');
       table.string('image_url');
+      table.string('image_id');
     })
   ])
 };

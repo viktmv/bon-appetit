@@ -7,12 +7,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-      <span class="navbar-brand" href="#">Welcome!</span>
+      <a class="navbar-brand" href="#"><img src="/images/logo.png" alt="Logo"></a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="/restaurants">Restauranteur</a></li>
+        <li><a href="/restaurants">Restaurant Login</a></li>
         <!-- <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -24,7 +24,7 @@
             <li class="divider"></li>
             <li><a href="#">One more separated link</a></li>
           </ul> -->
-          <% if (user) { %><li><a href="/users/1/orders">Check out my orders</a> <% } %>
+          <% if (user) { %><li><a href="/users/1/orders">Your Orders</a> <% } %>
       </ul>
       <form id="loginForm" class="navbar-form navbar-right">
         <% if (!user) { %>
@@ -40,7 +40,7 @@
 
         <button type="submit" class="btn btn-primary">Login</button>
         <% } else { %>
-          <button id="logout-btn" class="btn btn-primary">logout</button>
+          <button id="logout-btn" class="btn btn-primary">Logout</button>
           <% } %>
       </form>
     </div>
