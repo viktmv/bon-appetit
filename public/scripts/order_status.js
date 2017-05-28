@@ -15,7 +15,7 @@ $(document).ready(function () {
   $('.oid').on('submit', function(event) {
     event.stopPropagation();
     event.preventDefault();
-
+    let form = this
     let id = $(this).data('id');
     let val = Number($(this).find('.txt-input').val());
 
@@ -27,12 +27,13 @@ $(document).ready(function () {
     if (isEmpty) return;
 
 
-    $.ajax('/admin/order_status', {
+    $.ajax(`/restaurants/order_status/${timeData.id}`, {
       method: 'post',
       data: timeData
     })
     .then(function() {
-      $('.txt-input').val('');
+      $(form).find('.txt-input').prop('readonly', true);
+      $(form).find('button').prop('disabled', 'true').text('Accepted');
     })
     .fail(function(error) {
       //display any errors
@@ -56,12 +57,13 @@ $(document).ready(function () {
       notDone: notDone
     };
 
-    $.ajax('/admin/done', {
+    let form = this
+    $.ajax(`/restaurants/done/${id}`, {
       method: 'post',
       data: status
     })
       .then(function() {
-        $('.txt-input').val('');
+        $(form).find('button').prop('disabled', 'true');
       })
       .fail(function(error) {
         //display any errors

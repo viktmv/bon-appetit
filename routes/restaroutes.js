@@ -9,7 +9,7 @@ module.exports = (knex) => {
 
   router.post('/order_status/:id', (req, res) => {
     const orderid = req.params.id;
-    const time = req.body.time;
+    const time = req.body.val;
 
     return knex('orders')
     .where('orders.id', '=', orderid)
@@ -22,6 +22,7 @@ module.exports = (knex) => {
       .where('orders.id', '=', orderid)
       .then(function(result) {
         sms.user = result;
+        console.log(result)
         // Console log the db query
         // twilio.message(sms.user[0].first_name, 'Ice Sream', sms.user[0].time, `http://localhost:8080/users/${sms.user[0].id}/orders`);
       });

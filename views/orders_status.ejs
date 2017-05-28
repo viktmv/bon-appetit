@@ -9,7 +9,7 @@
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <!-- <script type="text/javascript" src="/scripts/order_status.js"></script> -->
+    <script type="text/javascript" src="/scripts/order_status.js"></script>
   </head>
   <body>
   <!-- Nav bar -->
@@ -54,7 +54,7 @@
         <form method="POST" action="/restaurants/order_status/<%= i %>" class="oid" id="<%= i %>" data-id="<%= i%>">
           <div class="input-group">
            <span class="input-group-btn">
-            <button class="btn btn-success" name="go" type="submit">Go!</button>
+            <button class="btn btn-success" name="go" type="submit">Accept!</button>
            </span>
            <input type="text" placeholder="minutes" name="time" value="0" class="form-control txt-input">
          </div>
