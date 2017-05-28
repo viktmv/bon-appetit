@@ -29,7 +29,7 @@ module.exports = (knex) => {
         sms.user = result;
         // Console log the db query
         console.log('Result', result);
-        twilio.message(sms.user[0].first_name, 'Smokes Poutinerie', sms.user[0].time, `http://localhost:8000/users/order/${orderid}`);
+        twilio.message(sms.user[0].first_name, 'Smokes Poutinerie', sms.user[0].time, `http://localhost:8080/users/${sms.user[0].id}/orders`);
       });
     })
     .then(function() {
