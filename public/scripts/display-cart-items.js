@@ -43,14 +43,15 @@ const createCartItem = (cartItem) => {
       <div class="item-controls">
         <ul class="adjust-item">
           <li>
-            <input class="edit-item-quantity" data-id="${cartItem.item_id}" type="number" class="form-control text-center" value="${cartItem.quantity}"></input>
+            <input type="button" class="delete-item" value="Remove" data-id="${cartItem.item_id}"></input>
           </li>
           <li>
-            <input type="button" class="delete-item" value="Remove" data-id="${cartItem.item_id}"></input>
+            x<input class="edit-item-quantity" data-id="${cartItem.item_id}" type="number" class="form-control text-center" value="${cartItem.quantity}"></input>
           </li>
         </ul>
       </div>
       <div class="text-right">
+        <span>Item-total:</span>
         <span class="item-subtotal">$${roundMoney(cartItem.price * cartItem.quantity)}</span>
       </div>
     </div>
@@ -84,26 +85,26 @@ const renderTotals = () => {
   $('.order-wrapper').append(`
     <div class="row totals">
     <div class="col-12 text-right">
-    <p>Subtotal $${roundMoney(subTotal).toFixed(2)}</p>
-    <p>Tax $${roundMoney(tax).toFixed(2)}</p>
-    <p>Total $${roundMoney(total).toFixed(2)}</p>
+    <p>Subtotal: $${roundMoney(subTotal).toFixed(2)}</p>
+    <p>Tax: $${roundMoney(tax).toFixed(2)}</p>
+    <p>Total: $${roundMoney(total).toFixed(2)}</p>
     </div>
     </div>
     `);
   }
-
+let notice = `
+  <div class="row empty-notice">
+  <div class="col-12 text-center">
+  Please select an item from the <a href="/users/menu">menu</a>.
+  </div>
+  </div>
+  `
 const displayCartItems = () => {
   $('.order-wrapper').html('')
   if (localStorage.getItem('cart') === null || JSON.parse(localStorage.getItem('cart')).foods.length === 0) {
 
     if ($('.empty-notice').length === 0) {
-      $('.order-wrapper').append(`
-        <div class="row empty-notice">
-        <div class="col-12 text-center">
-        Please select an item from the <a href="/users/menu">menu</a>.
-        </div>
-        </div>
-        `)
+      $('.order-wrapper').append(notice)
     }
     //  $('#checkout').attr('class', 'checkout-hidden')
      $('.totals').remove()
@@ -136,8 +137,10 @@ const displayCartItems = () => {
 
 
     $('.order-wrapper .edit-item-quantity').on('change', (e) => {
-        console.log('first')
         let quantity = $(e.target).val();
+
+        if (quantity < 1) $(e.target).parents('div#cart-item.row').remove()
+
         let price = Number($(e.target).parents('div#cart-item.row').find('.item-price').html().slice(1));
         let item = $(e.target).closest('.edit-item-quantity');
         editCart(item.data('id'), quantity);
