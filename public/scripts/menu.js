@@ -30,7 +30,7 @@ $(() => {
   $(function() {
     $("#img3").hover(
       function() {
-        $(this).attr("src", "http://www.bangbangicecream.com/flavour/images/4.gif");
+        $(this).attr("src", "http://www.bangbangicecream.com/flavour/images/3.gif");
       },
       function() {
         $(this).attr("src", "http://www.bangbangicecream.com/flavour/images/3f.png");
