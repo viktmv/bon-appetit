@@ -5,7 +5,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 8080;
 
 const ENV = process.env.ENV || 'development';
-const stripeKey = process.env.STRIPE_KEY
+// const stripeKey = process.env.STRIPE_KEY;
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('cookie-session');
@@ -22,17 +22,17 @@ const knexLogger = require('knex-logger');
 const restaroutes = require('./routes/restaroutes');
 const usersRoutes = require('./routes/users');
 
-const stripe = require("stripe")(
-  stripeKey
-);
+// const stripe = require('stripe')(
+//   stripeKey
+// );
 
-stripe.accounts.create({
-  type: 'standard',
-  country: 'US',
-  email: 'bob@example.com'
-}, function(err, account) {
-  console.log(account)
-});
+// stripe.accounts.create({
+//   type: 'standard',
+//   country: 'US',
+//   email: 'bob@example.com'
+// }, function(err, account) {
+//   console.log(account)
+// });
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -75,7 +75,6 @@ app.use('/restaurants', restaroutes(knex));
 
 app.get('/', (req, res) => {
   let user;
-  console.log(req.session);
   if (req.session.username) user = req.session.username;
   res.status(200).render('index.ejs', {user});
 });

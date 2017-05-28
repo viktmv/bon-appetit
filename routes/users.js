@@ -5,39 +5,39 @@ const router = express.Router();
 const twilio = require('../public/scripts/twilio');
 
 const createOrder = (cart) => {
-  const order = []
+  const order = [];
   cart.foods.forEach((food) => {
     order.push({
       item_id: food.item_id,
       quantity: food.quantity
     });
-  })
+  });
   return order;
-}
+};
 
 // Calculates total cost of each order
 const calculateTotal = (cart) => {
   let total = 0;
   cart.foods.forEach((food) => {
-    total += (food.price * food.quantity)
-  })
+    total += (food.price * food.quantity);
+  });
   // Adds tax to total. The total will not be rounded before database insertion (eg. 79.99999999999999999)
   return total * 1.13;
-}
+};
 
 // Function to create message from order. String inserts the item name and quantity,
 // pluralizes the name if the quantity is greater than 1. Seperates items with commas and replaces
 // the last commas with 'and'
 const createOrderMessage = (order) => {
-  const messageArray = []
+  const messageArray = [];
   order.forEach((item) => {
     if (item.quantity > 1) {
-      messageArray.push(`${item.quantity} ${item.name}s`)
+      messageArray.push(`${item.quantity} ${item.name}s`);
     } else {
-      messageArray.push(`${item.quantity} ${item.name}`)
+      messageArray.push(`${item.quantity} ${item.name}`);
     }
-  })
-  return messageArray.join(', ').replace(/,(?=[^,]*$)/, ' and')
+  });
+  return messageArray.join(', ').replace(/,(?=[^,]*$)/, ' and');
 }
 
 module.exports = (knex) => {
@@ -112,7 +112,7 @@ module.exports = (knex) => {
         // twilio.message('Dong', message, 'Ice Scream');
 
         // Hard coded name as "Dong" and time as "10"
-        twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
+        // twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
 
         res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
