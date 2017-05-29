@@ -63,7 +63,7 @@ module.exports = (knex) => {
   // products_menu table.
   router.post('/order', (req, res) => {
     // Checks for userID in cookie/session if user validation can be implemented
-    // const userID        = req.session.user_id
+    // Const userID        = req.session.user_id
     const userID = 1; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
     const cart = JSON.parse(req.body.cart);
     const total = calculateTotal(cart);
@@ -99,7 +99,7 @@ module.exports = (knex) => {
         // twilio.message('Dong', message, 'Ice Scream');
 
         // Hard coded name as "Dong" and time as "10"
-        // twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
+        twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
         res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
       })

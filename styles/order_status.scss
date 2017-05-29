@@ -87,6 +87,8 @@ body {
     }
 
     .est-time {
+      position: relative;
+      top: -40px;
 
       .input-group {
         z-index: 1;
@@ -97,4 +99,8 @@ body {
       }
     }
   }
+}
+
+.forms {
+  display: inline;
 }
