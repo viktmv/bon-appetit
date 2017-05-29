@@ -47,8 +47,12 @@ module.exports = (knex) => {
       .select()
       .from('foods')
       .then((foods) => {
+<<<<<<< HEAD
         let user = req.session.username || '';
 
+=======
+        let user = req.session.username || ''
+>>>>>>> finalstyles
         res.render('menu', {
           user,
           foods
@@ -100,7 +104,10 @@ module.exports = (knex) => {
 
         // Hard coded name as "Dong" and time as "10"
         // twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
+<<<<<<< HEAD
 
+=======
+>>>>>>> finalstyles
         res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
       })
@@ -128,11 +135,19 @@ module.exports = (knex) => {
       .then(data => {
         let orders = {};
         data.forEach(item => {
+<<<<<<< HEAD
           let id = item.order_id;
           orders[id] ? orders[id].push(item) : orders[id] = [item];
         });
         res.render('user_orders', {orders});
       });
+=======
+          let id = item.order_id
+          orders[id] ? orders[id].push(item) : orders[id] = [item]
+        })
+        res.render('user_orders', {orders, user: userID})
+      })
+>>>>>>> finalstyles
   });
 
   // Render cart when user clicks on cart icon
@@ -145,8 +160,13 @@ module.exports = (knex) => {
 
   // Render a specific order
   router.get('/order/:orderID', (req, res) => {
+<<<<<<< HEAD
     const orderID = req.params.orderID;
     console.log('GET ORDER', orderID);
+=======
+    const orderID = req.params.orderID
+    // console.log('GET ORDER', orderID)
+>>>>>>> finalstyles
     return knex.from('food_orders')
       .innerJoin('orders', 'food_orders.order_id', 'orders.id')
       .innerJoin('foods', 'food_orders.item_id', 'foods.id')
@@ -159,11 +179,20 @@ module.exports = (knex) => {
           orderID: orderID,
           user
         };
+<<<<<<< HEAD
         if (locals.foods.length === 0) {
           res.redirect('/users/menu');
         } else {
           res.render('order_confirmation', locals);
         }
+=======
+          // console.log(allFoods)
+          if (locals.foods.length === 0) {
+            res.redirect('/users/menu');
+          } else {
+            res.render('order_confirmation', locals);
+          }
+>>>>>>> finalstyles
       })
       .catch((err) => {
         console.log('Knex query failed', err);
