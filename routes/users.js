@@ -108,7 +108,7 @@ module.exports = (knex) => {
         // ACTIVATE THIS TWILIO MESSAGE WHEN WE DEMO
         // COMMENTED OUT FOR TESTING PURPOSES
         // Hard coded name as "Dong" and time as "10"
-        twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
+        // twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
         res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
       })
