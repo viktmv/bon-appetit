@@ -9,16 +9,7 @@ module.exports = (knex) => {
 
   router.post('/order_status/:id', (req, res) => {
     const orderid = req.params.id;
-<<<<<<< HEAD
     const time = req.body.val;
-=======
-    const time = req.body.time;
-
-    //Console log orderID
-    // console.log('Order ID', orderid);
-    // Console log the entered time within the order_status
-    // console.log('Entered time', req.body.time);
->>>>>>> finalstyles
 
     return knex('orders')
     .where('orders.id', '=', orderid)
@@ -33,12 +24,7 @@ module.exports = (knex) => {
         sms.user = result;
         console.log(result)
         // Console log the db query
-<<<<<<< HEAD
         // twilio.message(sms.user[0].first_name, 'Ice Sream', sms.user[0].time, `http://localhost:8080/users/${sms.user[0].id}/orders`);
-=======
-        console.log('sms.user', result);
-        // twilio.message(sms.user[0].first_name, 'Ice Scream', sms.user[0].time, `http://localhost:8080/users/${sms.user[0].id}/orders`);
->>>>>>> finalstyles
       });
     })
     .then(function() {
@@ -64,12 +50,8 @@ module.exports = (knex) => {
             });
 
             foodOrders.forEach(order => {
-<<<<<<< HEAD
               let id = order.order_id;
-=======
-              let id = order.order_id
-              // console.log('ORDER IS:', order)
->>>>>>> finalstyles
+
               if (data.orders[id]) {
                 data.orders[id].price = order.total_price;
                 data.orders[id].items.push(order.name);
@@ -77,12 +59,7 @@ module.exports = (knex) => {
               else {
                 data.orders[id] = { price: order.total_price, items: [order.name] };
               }
-<<<<<<< HEAD
             });
-=======
-            })
-            // console.log('RENDERING DATA:', data)
->>>>>>> finalstyles
             res.render('orders_status', {data});
           });
       });
@@ -92,13 +69,6 @@ module.exports = (knex) => {
   router.post('/done/:id', (req, res) => {
 
     const orderid = req.params.id;
-<<<<<<< HEAD
-=======
-    const done = true;
-    const notDone = false;
-
-    // console.log(orderid);
->>>>>>> finalstyles
 
     return knex('orders')
         .where('orders.id', '=', orderid)
