@@ -64,11 +64,12 @@ $(document).ready(function () {
     })
       .then(function() {
         $(form).find('button').prop('disabled', 'true');
+        $(form).closest('.container-fluid.sub-table').remove()
       })
       .fail(function(error) {
         //display any errors
         console.error(error);
       });
-    return;
+    return
   });
 });
