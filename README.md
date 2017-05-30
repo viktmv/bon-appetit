@@ -6,7 +6,7 @@ A food pick-up ordering app built for an icecream parlor but scalable to include
 * Backend was built using Node.js, Express, and PostreSQL
 * Twilio API (modern telecomm API service) was used to allow text message or audio communication between the customer and restaurant
 
-## Team Members:
+## Team Members
 * Dong Hu
 * Viktor Tymofeev
 * Karunvir Singh
@@ -66,7 +66,7 @@ Restaurant's active order page that allows the restaurant to update the ETA and 
 * Node 5.10.x or above
 * NPM 3.8.x or above
 
-## Improvements:
+## Improvements
 * Register Page for User
 * User and restaurant authentication
 * Responsive Design
