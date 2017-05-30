@@ -6,6 +6,11 @@ A food pick-up ordering app built for an icecream parlor but scalable to include
 * Backend was built using Node.js, Express, and PostreSQL
 * Twilio API (modern telecomm API service) was used to allow text message or audio communication between the customer and restaurant
 
+## Team Members:
+* Dong Hu
+* Viktor Tymofeev
+* Karunvir Singh
+
 ## Project Screenshots
 ![](./assets/screenshot1.png)
 
@@ -50,18 +55,18 @@ Restaurant's active order page that allows the restaurant to update the ETA and 
 3. Install dependencies: `npm i`
 4. Fix to binaries for sass: `npm rebuild node-sass`
 5. Run migrations: `npm run knex migrate:latest`
-  - Check the migrations folder to see what gets created in the DB
+  * Check the migrations folder to see what gets created in the DB
 6. Run the seed: `npm run knex seed:run`
-  - Check the seeds file to see what gets seeded in the DB
+  * Check the seeds file to see what gets seeded in the DB
 7. Run the server: `npm run local`
 8. Visit `http://localhost:8080/`
 
 ## Dependencies
 
-- Node 5.10.x or above
-- NPM 3.8.x or above
+* Node 5.10.x or above
+* NPM 3.8.x or above
 
-## Need to still do:
-- Register Page for User
-_ User and restaurant authentication
-- Responsive Design
+## Improvements:
+* Register Page for User
+* User and restaurant authentication
+* Responsive Design
