@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const twilio = require('../public/scripts/twilio');
+// const twilio = require('../public/scripts/twilio');
 
 const createOrder = (cart) => {
   const order = [];
@@ -99,7 +99,7 @@ module.exports = (knex) => {
         // twilio.message('Dong', message, 'Ice Scream');
 
         // Hard coded name as "Dong" and time as "10"
-        twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
+        // twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
         //  THIS IS WHERE W CAN IMPLEMENT THE CALL FUNCTION
         res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
