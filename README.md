@@ -63,8 +63,24 @@ Restaurant's active order page that allows the restaurant to update the ETA and 
 
 ## Dependencies
 
-* Node 5.10.x or above
+* pg 6.x or above
+* ejs 2.4.x or above
 * NPM 3.8.x or above
+* Node 5.10.x or above
+* knex 0.11.x or above
+* async 2.4.x or above
+* bcrypt 1.0.x or above
+* dotenv 2.0.x or above
+* twilio 3.3.0 or above
+* stripe 4.2.x or above
+* ngrok: 2.2.x or above
+* morgan: 1.7.x or above
+* express 4.13.x or above
+* nodemon 1.11.x or above
+* knex-logger: 0.1.x or above
+* body-parser 1.15.x or above
+* cookie-session 2.0.0 or above
+* node-sass-middleware 0.x or above
 
 ## Improvements
 * Register Page for User
