@@ -112,6 +112,26 @@ app.post('/logout', (req, res) => {
 });
 
 
+app.get('/register', (req, res) => {
+  let user;
+  if (req.session.username) user = req.session.username;
+
+  res.render('register.ejs', {user})
+})
+
+app.post('/register', (req, res) => {
+  let {username, email, password} =  req.body
+
+  bcrypt.hash(password, saltRounds, function(err, hash) {
+    knex('users')
+      .insert({username, email, password: hash})
+      .then(result => console.log(result))
+  });
+
+  // res.render('register.ejs', {user})
+})
+
+
 app.listen(PORT, () => {
   console.log('Example app listening on port' + PORT);
 });
