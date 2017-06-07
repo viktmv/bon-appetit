@@ -10,6 +10,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('cookie-session');
 const sass = require('node-sass-middleware');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -36,7 +37,7 @@ const usersRoutes = require('./routes/users');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
+// The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
@@ -102,7 +103,6 @@ app.post('/login', (req, res) => {
     console.log('something happend', err);
     res.sendStatus(500);
   });
-
 });
 
 // Logout
@@ -110,7 +110,6 @@ app.post('/logout', (req, res) => {
   req.session = null;
   res.sendStatus(200);
 });
-
 
 app.listen(PORT, () => {
   console.log('Example app listening on port' + PORT);
