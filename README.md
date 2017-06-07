@@ -82,7 +82,7 @@ Restaurant's active order page that allows the restaurant to update the ETA and 
 * cookie-session 2.0.0 or above
 * node-sass-middleware 0.x or above
 
-## Improvements
+## Still in progress
 * Register Page for User
 * User and restaurant authentication
 * Responsive Design
