@@ -1,30 +1,37 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/styles/register.css" type="text/css"/>
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+</head>
 <% include ./partials/_header %>
-<% include ./partials/_register %>
 
 <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-<head>
-  <link rel="stylesheet" href="/styles/register.css" type="text/css"/></head>
-<div class="wrapper">
+<div class="container center">
   <h1 style="font-size:300%;">Register For An Account</h1>
   <p>To sign-up for a free basic account please provide us with some basic information using
   the contact form below. Please use valid credentials.</p>
-  <form class="form" method="get" action="/">
-    <input type="text" class="name" placeholder="Name">
+  <form class="form" method="POST" action="/register">
+    <input type="text" name="username" class="name" placeholder="Name">
     <div>
       <p class="name-help">Please enter your first and last name.</p>
     </div>
-    <input type="email" class="email" placeholder="Email">
+    <input type="email" name="email" class="email" placeholder="Email">
      <div>
       <p class="email-help">Please enter your current email address.</p>
     </div>
-    <input type="password" class="password" placeholder="Password">
+    <input type="password" class="password" name="password" placeholder="Password">
       <div>
        <p class="password-help">Please enter a password</p>
       </div>
     <input type="submit" class="submit" value="Register">
   </form>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 </html>
