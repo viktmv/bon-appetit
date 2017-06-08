@@ -79,6 +79,12 @@ app.get('/', (req, res) => {
   res.status(200).render('index.ejs', {user});
 });
 
+app.get('/login', (req, res) => {
+  let user;
+  if (req.session.username) user = req.session.username;
+  res.status(200).render('login.ejs', {user});
+});
+
 // Login
 // TODO: connect to DB for password checking
 app.post('/login', (req, res) => {
@@ -96,12 +102,11 @@ app.post('/login', (req, res) => {
   .select()
   .then((userData) => {
     if (userData.length === 0) return res.sendStatus(404);
-    console.log(userData[0])
     let {username, password} = userData[0]
     bcrypt.compare(passwordText, password, function(err, result) {
       if (!result) return res.sendStatus(403)
       req.session.username = userData[0].username;
-      res.status(200).send(userData);
+      res.status(200).redirect('/users/menu');
     });
 
 
@@ -133,7 +138,8 @@ app.post('/register', (req, res) => {
   bcrypt.hash(password, saltRounds, function(err, hash) {
     knex('users')
       .insert({username, email, password: hash})
-      .then(result => console.log(result))
+      .then(() => { if (!err) res.status(200).redirect('/') })
+      .catch(err => res.sendStatus(500))
   });
 
   // res.render('register.ejs', {user})
