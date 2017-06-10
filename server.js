@@ -14,11 +14,15 @@ const bcrypt = require('bcrypt');
 
 const app = express();
 
+// Query Builder
 const knexConfig = require('./knexfile');
 const knex = require('knex')(knexConfig[ENV]);
+// Loggers
 const morgan = require('morgan');
 const knexLogger = require('knex-logger');
-
+// Bcrypt
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 // Seperated Routes for each resource
 const restaroutes = require('./routes/restaroutes');
 const usersRoutes = require('./routes/users');
@@ -44,10 +48,6 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set('view engine', 'ejs');
-
-// Dong -  Cookie session settings to keep track of the userID
-// Vik - I've replaced express session with cookie-session.
-// It is a bit easier to use and IMO a bit more suitable for our case
 
 app.use(session({
   name: 'session',
@@ -80,24 +80,37 @@ app.get('/', (req, res) => {
   res.status(200).render('index.ejs', {user});
 });
 
+app.get('/login', (req, res) => {
+  let user;
+  if (req.session.username) user = req.session.username;
+  res.status(200).render('login.ejs', {user});
+});
+
 // Login
 // TODO: connect to DB for password checking
 app.post('/login', (req, res) => {
   let username = req.body.username;
-  let password = req.body.password;
+  let passwordText = req.body.password;
   if (!username) return res.sendStatus(403);
-  if (!password) return res.sendStatus(403);
+  if (!passwordText) return res.sendStatus(403);
+
+
 
   knex('users')
   .where({
-    username,
-    password
+    username
   })
   .select()
   .then((userData) => {
     if (userData.length === 0) return res.sendStatus(404);
-    req.session.username = userData[0].username;
-    res.status(200).send(userData);
+    let {username, password} = userData[0]
+    bcrypt.compare(passwordText, password, function(err, result) {
+      if (!result) return res.sendStatus(403)
+      req.session.username = userData[0].username;
+      res.status(200).redirect('/users/menu');
+    });
+
+
   })
   .catch(err => {
     console.log('something happend', err);
@@ -110,6 +123,28 @@ app.post('/logout', (req, res) => {
   req.session = null;
   res.sendStatus(200);
 });
+
+
+app.get('/register', (req, res) => {
+  let user;
+  if (req.session.username) user = req.session.username;
+
+  res.render('register.ejs', {user})
+})
+
+app.post('/register', (req, res) => {
+  let {username, email, password} =  req.body
+
+  bcrypt.hash(password, saltRounds, function(err, hash) {
+    knex('users')
+      .insert({username, email, password: hash})
+      .then(() => { if (!err) res.status(200).redirect('/') })
+      .catch(err => res.sendStatus(500))
+  });
+
+  // res.render('register.ejs', {user})
+})
+
 
 app.listen(PORT, () => {
   console.log('Example app listening on port' + PORT);
