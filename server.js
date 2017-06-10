@@ -3,14 +3,12 @@
 require('dotenv').config();
 
 const PORT = process.env.PORT || 8080;
-
 const ENV = process.env.ENV || 'development';
-// const stripeKey = process.env.STRIPE_KEY;
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('cookie-session');
 const sass = require('node-sass-middleware');
-const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -26,18 +24,6 @@ const saltRounds = 10;
 // Seperated Routes for each resource
 const restaroutes = require('./routes/restaroutes');
 const usersRoutes = require('./routes/users');
-
-// const stripe = require('stripe')(
-//   stripeKey
-// );
-
-// stripe.accounts.create({
-//   type: 'standard',
-//   country: 'US',
-//   email: 'bob@example.com'
-// }, function(err, account) {
-//   console.log(account)
-// });
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -65,36 +51,31 @@ app.use('/styles', sass({
 app.use(express.static('public'));
 
 // Mount all resource routes
-
 app.use('/users', usersRoutes(knex));
 app.use('/restaurants', restaroutes(knex));
-
 
 // ^^^^^^^^^ INITIAL SETUP - DO NOT MODIFY ANYTHING ABOVE THIS LINE ^^^^^^^^^^
 
 // Home page
-
 app.get('/', (req, res) => {
   let user;
   if (req.session.username) user = req.session.username;
   res.status(200).render('index.ejs', {user});
 });
 
+// Login page
 app.get('/login', (req, res) => {
   let user;
   if (req.session.username) user = req.session.username;
   res.status(200).render('login.ejs', {user});
 });
 
-// Login
-// TODO: connect to DB for password checking
+// Login handler
 app.post('/login', (req, res) => {
   let username = req.body.username;
   let passwordText = req.body.password;
   if (!username) return res.sendStatus(403);
   if (!passwordText) return res.sendStatus(403);
-
-
 
   knex('users')
   .where({
@@ -103,14 +84,12 @@ app.post('/login', (req, res) => {
   .select()
   .then((userData) => {
     if (userData.length === 0) return res.sendStatus(404);
-    let {username, password} = userData[0]
+    let {username, password} = userData[0];
     bcrypt.compare(passwordText, password, function(err, result) {
-      if (!result) return res.sendStatus(403)
+      if (!result) return res.sendStatus(403);
       req.session.username = userData[0].username;
       res.status(200).redirect('/users/menu');
     });
-
-
   })
   .catch(err => {
     console.log('something happend', err);
@@ -124,27 +103,25 @@ app.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
-
+// Register page
 app.get('/register', (req, res) => {
   let user;
   if (req.session.username) user = req.session.username;
 
-  res.render('register.ejs', {user})
-})
+  res.render('register.ejs', {user});
+});
 
+// Register handler
 app.post('/register', (req, res) => {
-  let {username, email, password} =  req.body
+  let {username, email, password} = req.body;
 
   bcrypt.hash(password, saltRounds, function(err, hash) {
     knex('users')
       .insert({username, email, password: hash})
-      .then(() => { if (!err) res.status(200).redirect('/') })
-      .catch(err => res.sendStatus(500))
+      .then(() => { if (!err) res.status(200).redirect('/'); })
+      .catch(() => res.sendStatus(500));
   });
-
-  // res.render('register.ejs', {user})
-})
-
+});
 
 app.listen(PORT, () => {
   console.log('Example app listening on port' + PORT);
