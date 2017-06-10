@@ -1,7 +1,7 @@
 $(() => {
+  // Login landler
   $('#loginForm').on('submit', function(e) {
     e.preventDefault();
-    console.log('auth script running');
 
     let username = $('#username').val();
     let password = $('#pwd').val();
@@ -13,17 +13,18 @@ $(() => {
     .done((data) => { if (data.length > 0) window.location.reload(); })
     .fail(err => console.log(err));
   });
+  // Logout handler
   $('#logout-btn').on('click', function(e) {
     e.preventDefault();
 
     $.ajax('/logout', {
       method: 'POST',
     }).done(() => {
-      console.log('session cleared');
       window.location.reload();
     });
   });
 
+  // Landler for the restaurant login
   $('.restaurant-auth').on('submit', function(e) {
     e.preventDefault();
 

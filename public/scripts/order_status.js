@@ -26,7 +26,6 @@ $(document).ready(function () {
 
     if (isEmpty) return;
 
-
     $.ajax(`/restaurants/order_status/${timeData.id}`, {
       method: 'post',
       data: timeData
@@ -36,7 +35,6 @@ $(document).ready(function () {
       $(form).find('button').prop('disabled', 'true').text('Accepted');
     })
     .fail(function(error) {
-      //display any errors
       console.error(error);
     });
     return;
@@ -45,7 +43,6 @@ $(document).ready(function () {
   $('.done').on('submit', function(event) {
     event.stopPropagation();
     event.preventDefault();
-
 
     let id = $(this).data('id');
     let done = true;
@@ -67,7 +64,6 @@ $(document).ready(function () {
         $(form).closest('.container-fluid.sub-table').remove()
       })
       .fail(function(error) {
-        //display any errors
         console.error(error);
       });
     return
