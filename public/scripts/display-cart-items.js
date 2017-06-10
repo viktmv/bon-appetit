@@ -1,3 +1,4 @@
+// File with helper functions and event handlers for cart
 const deleteCartItem = (id) => {
   let cart = getCart();
   let matchingProduct = cart.foods.findIndex((food) => {
@@ -153,6 +154,8 @@ const displayCartItems = () => {
     });
   }
 };
+
+// Set up display handlers
 $(() => {
   $('.partial-cart').hide();
 

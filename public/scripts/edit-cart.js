@@ -15,6 +15,7 @@ const editCart = (id, quantity) => {
 };
 
 $(() => {
+  // Handler for editing item quantity
   $('#edit-item-quantity').on('click', (e) => {
     $(e.target).on('change', (e) => {
       let quantity = $(e.target).val();

@@ -13,7 +13,12 @@ body {
   margin-top: 100px;
   color: #fff;
   .order-container {
-    background-color: rgba(0, 0, 0, .5);
+    border-radius: 15px;
+    padding: 25px;
+    background-color: rgba(0, 0, 0, .3);
+    .item-info {
+      font-size: 1.2em;
+    }
   }
   .eta {
     margin-top: 15px;
@@ -32,14 +37,14 @@ body {
   }
   hr {
     text-align: right;
-    margin-right: 120px;
+    margin-right: 0;
     width: 30%;
-    border-top: 1px solid black;
+    border-top: 1px solid #fff;
     margin-top: 30px;
   }
   .totals {
     p {
-      font-size: 1.1em;
+      font-size: 1.3em;
     }
   }
   .thank-you {

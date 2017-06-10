@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const twilio = require('../public/scripts/twilio');
+// const twilio = require('../public/scripts/twilio');
 
 const createOrder = (cart) => {
   const order = [];
@@ -63,7 +63,7 @@ module.exports = (knex) => {
   // products_menu table.
   router.post('/order', (req, res) => {
     // Checks for userID in cookie/session if user validation can be implemented
-    // const userID        = req.session.user_id
+    // Const userID        = req.session.user_id
     const userID = 1; // this is Dong's userID *DO NOT CHANGE FOR TESTING*
     const cart = JSON.parse(req.body.cart);
     const total = calculateTotal(cart);
@@ -100,7 +100,7 @@ module.exports = (knex) => {
 
         // Hard coded name as "Dong" and time as "10"
         // twilio.message('Dong', 'Ice Scream', 'no time', `http://localhost:8080/users/${userID}/orders`);
-
+        //  THIS IS WHERE W CAN IMPLEMENT THE CALL FUNCTION
         res.json({url: `order/${order_id}`});
         // res.redirect('/users/order/' + order_id);
       })
@@ -131,7 +131,7 @@ module.exports = (knex) => {
           let id = item.order_id;
           orders[id] ? orders[id].push(item) : orders[id] = [item];
         });
-        res.render('user_orders', {orders});
+        res.render('user_orders', {orders, user: userID});
       });
   });
 
@@ -147,6 +147,7 @@ module.exports = (knex) => {
   router.get('/order/:orderID', (req, res) => {
     const orderID = req.params.orderID;
     console.log('GET ORDER', orderID);
+
     return knex.from('food_orders')
       .innerJoin('orders', 'food_orders.order_id', 'orders.id')
       .innerJoin('foods', 'food_orders.item_id', 'foods.id')

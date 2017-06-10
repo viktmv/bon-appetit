@@ -2,14 +2,14 @@
 
 const express = require('express');
 const router = express.Router();
-const twilio = require('../public/scripts/twilio');
+// const twilio = require('../public/scripts/twilio');
 
 module.exports = (knex) => {
   // all routes are prepended with /restaurants
 
   router.post('/order_status/:id', (req, res) => {
     const orderid = req.params.id;
-    const time = req.body.time;
+    const time = req.body.val;
 
     return knex('orders')
     .where('orders.id', '=', orderid)
@@ -18,10 +18,11 @@ module.exports = (knex) => {
       const sms = {};
       return knex('orders')
       .innerJoin('users', 'orders.user_id', 'users.id')
-      .select('users.first_name', 'orders.time')
+      .select('users.first_name', 'orders.time', 'users.id')
       .where('orders.id', '=', orderid)
       .then(function(result) {
         sms.user = result;
+        // console.log(result)
         // Console log the db query
         // twilio.message(sms.user[0].first_name, 'Ice Sream', sms.user[0].time, `http://localhost:8080/users/${sms.user[0].id}/orders`);
       });
@@ -50,6 +51,7 @@ module.exports = (knex) => {
 
             foodOrders.forEach(order => {
               let id = order.order_id;
+
               if (data.orders[id]) {
                 data.orders[id].price = order.total_price;
                 data.orders[id].items.push(order.name);

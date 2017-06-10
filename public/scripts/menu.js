@@ -1,5 +1,5 @@
+// Handler for dynamic menu-item images on hover
 $(() => {
-  // <img id='imgDino' src='http://bestuff.com/images/images_of_stuff/64x64crop/t-rex-51807.jpg?1176587870' />
   $(function() {
     $('#img1').hover(
       function() {

@@ -1,3 +1,4 @@
+// 'Done' button for the order
 $(() => {
   $('.ready-btn').click(function() {
     let orderID = $(this).closest('li').data('id');
