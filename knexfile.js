@@ -1,6 +1,7 @@
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
-console.log('PROCESS', process.env.DATABASE_URL)
 
 module.exports = {
 
@@ -25,19 +26,14 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    debug: true,
     connection: process.env.DATABASE_URL + '?ssl=true',
-    // pool: {
-    //   min: 2,
-    //   max: 10
-    // },
+    pool: {
+      min: 2,
+      max: 10
+    },
     migrations: {
-      directory: './db/migrations'
-      // tableName: 'migrations'
-    },
-    seeds: {
-      directory: './db/seeds'
-    },
-    ssl: true
+      tableName: 'migrations'
+    }
   }
+
 };
