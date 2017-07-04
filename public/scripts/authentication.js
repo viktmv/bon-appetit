@@ -13,6 +13,7 @@ $(() => {
     .done((data) => { if (data.length > 0) window.location.reload(); })
     .fail(err => console.log(err));
   });
+  
   $('#logout-btn').on('click', function(e) {
     e.preventDefault();
 
