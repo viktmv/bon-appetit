@@ -2,6 +2,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
+console.log('PROCESS ENV',process.env)
+
 module.exports = {
 
   development: {
